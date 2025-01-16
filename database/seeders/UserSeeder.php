@@ -18,16 +18,15 @@ class UserSeeder extends Seeder
          * Seeding admin users
          */
 
-         Admin::create([
+        Admin::create([
             'username' => 'superAdmin',
             'email' => 'superadmin@example.com',
             'password' => Hash::make('159357'),
-            'type' => 'super admin',
-         ]);
+            'type' => 'superAdmin',
+        ]);
 
         /**
          * Seeding customer
          */
-
     }
 }
