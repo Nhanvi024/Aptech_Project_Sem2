@@ -18,8 +18,15 @@ class Product extends Model
     // $table->string('proImageURL');
     // $table->text('proDescription');
     // $table->foreignId('cate_id')->constrained('categories')->onDelete('cascade');
-    protected $fillable = ['proName', 'proPrice', 'proStock', 'proDiscount', 'proStatus','proImageURL','proDescription','category_id'];
-    public function category(){
+    protected $fillable = ['proName', 'proCost', 'proPrice', 'proSeason', 'proOrigin', 'proStock', 'proDiscount', 'proActive', 'proSaleStatus', 'proImageURL', 'proDescription', 'category_id'];
+    public function category()
+    {
         return $this->belongsTo(Category::class);
+    }
+    protected function casts(): array
+    {
+        return [
+            'proImageURL' => 'array',
+        ];
     }
 }

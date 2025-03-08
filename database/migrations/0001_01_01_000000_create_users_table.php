@@ -13,24 +13,21 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('username');
-            $table->string('gender');
+            $table->string('name')->nullable();
+            $table->string('username')->unique(); //
+            $table->tinyInteger('gender');
             $table->string('email')->unique();
             $table->string('password');
             $table->date('dob')->nullable();
-            $table->string('phone')->nullable();
+            $table->string('phone', 16)->unique()->nullable();
             $table->string('address')->nullable();
-            $table->unsignedBigInteger('level')->nullable();
-            $table->boolean('bloked')->default(false);
-            $table->timestamp('email_verified_at')->nullable();
+            $table->boolean('blocked')->default(false);
+            $table->timestamp('email_verified_at')->nullable()->default(null);
+            $table->string('token_login', 32)->nullable()->default(null);
+            $table->string('token_password', 32)->nullable()->default(null);
+            $table->string('token_rememberMe', 100)->nullable()->default(null);
             $table->rememberToken();
             $table->timestamps();
-        });
-
-        Schema::create('password_reset_tokens', function (Blueprint $table) {
-            $table->string('email')->primary();
-            $table->string('token');
-            $table->timestamp('created_at')->nullable();
         });
 
         Schema::create('sessions', function (Blueprint $table) {

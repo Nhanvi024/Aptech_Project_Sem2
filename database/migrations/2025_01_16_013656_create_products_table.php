@@ -14,10 +14,14 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('proName');
+            $table->decimal('proCost', 10, 2);
             $table->decimal('proPrice', 10, 2);
-            $table->decimal('proStock', 10, 2);
+            $table->string('proSeason');
+            $table->string('proOrigin')->after('proSeason');
+            $table->integer('proStock');
             $table->smallInteger('proDiscount')->default(0);
-            $table->boolean('proStatus')->default(true);
+            $table->boolean('proActive')->default(true);
+            $table->smallInteger('proSaleStatus')->default(0);
             $table->string('proImageURL');
             $table->text('proDescription');
             $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
