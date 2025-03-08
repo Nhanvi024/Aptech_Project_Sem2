@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('username');
             $table->string('email')->unique();
             $table->string('password');
-            $table->enum('type', ['superAdmin', 'admin']);
-            $table->boolean('bloked')->default(false);
+            $table->enum('role', ['superAdmin', 'admin']);
+            $table->boolean('blocked')->default(false);
             $table->timestamps();
         });
     }
