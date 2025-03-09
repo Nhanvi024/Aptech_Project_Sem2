@@ -19,9 +19,9 @@
 				autocomplete="off">
 				@csrf
 				<div class="card-body">
-					<input type="text" name="token_login" id="" value={{ $token_login }}>
-					<input type="text" name="token_password" id="" value={{ $token_password }}>
-					<input type="text" name="email" id="" value={{ $email }}>
+					<input type="hidden" name="token_login" id="" value={{ $token_login }}>
+					<input type="hidden" name="token_password" id="" value={{ $token_password }}>
+					<input type="hidden" name="email" id="" value={{ $email }}>
 					<h2 class="card-title text-center mb-4">Reset password</h2>
 					<div class="form-group">
 						<label for="password"><span class="text-danger">*</span>Password</label>

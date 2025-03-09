@@ -94,7 +94,7 @@ class ProductsController extends Controller
             'proDiscount' => 'required|numeric|min:0|max:100',
             'category_id' => 'required',
             'image' => 'required|array',
-            'image.*' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image.*' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             'proDescription' => 'required|string|min:1|max:20000',
         ]);
         // dd('toi day roi');
@@ -154,7 +154,7 @@ class ProductsController extends Controller
             'proDiscount' => 'required|numeric|min:0|max:100',
             'category_id' => 'required',
             'image' => 'array',
-            'image.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image.*' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             'proDescription' => 'required|string|min:1|max:20000',
         ]);
         $imagesURL = $product->proImageURL;

@@ -17,13 +17,7 @@
 				<div class="col col-md-5">
 					<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel"
 						style="width: 100%; aspect-ratio: 1/1;">
-						<ol class="carousel-indicators">
-							<?php
-							for ($i = 0; $i < count($product?->proImageURL); $i++) {
-							    echo "<li data-target='#carouselExampleIndicators' style='background: url(/storage/products/{$product->proImageURL[$i]});width: 75px;height:75px;background-position: center;background-repeat: no-repeat;background-size: contain;aspect-ratio :1/1;' data-slide-to='$i'></li>";
-							}
-							?>
-						</ol>
+
 						<div class="carousel-inner">
 							<div class="carousel-item active">
 								<img class="d-block w-100" src="{{ asset("/storage/products/" . $product?->proImageURL[0]) }}"
@@ -43,29 +37,51 @@
 							<span class="carousel-control-next-icon" aria-hidden="true"></span>
 							<span class="sr-only">Next</span>
 						</a>
+						<ol class="carousel-indicators" style="position: static">
+							<?php
+							echo "<li class='active' data-target='#carouselExampleIndicators' style='background: url(/storage/products/{$product->proImageURL[0]});width: 75px;height:75px;background-position: center;background-repeat: no-repeat;background-size: contain;aspect-ratio :1/1;' data-slide-to='0'></li>";
+							?>
+
+							<?php
+							for ($i = 1; $i < count($product?->proImageURL); $i++) {
+							    echo "<li data-target='#carouselExampleIndicators' style='background: url(/storage/products/{$product->proImageURL[$i]});width: 75px;height:75px;background-position: center;background-repeat: no-repeat;background-size: contain;aspect-ratio :1/1;' data-slide-to='$i'></li>";
+							}
+							?>
+						</ol>
 					</div>
 				</div>
 				<div class="col-12 col-md-5 mx-auto px-5">
 					<div class="single-product-content">
-						<h3>{{ $product->proName }}</h3>
-						<p class="single-product-pricing"><span>Per Kg</span> <del
-								class=" h6 text-secondary text-sm">{{ $product->proDiscount > 0 ? "$" . $product->proPrice : "" }}</del>
-							${{ ($product->proPrice * (100 - $product->proDiscount)) / 100 }}</p>
-						<p>{{ $product->proDescription }}</p>
+						<h3><strong>{{ $product->proName }}</strong> </h3>
+						<p class="single-product-pricing">
+							<span class="text-danger">
+								<del class="h6 text-secondary text-sm">{{ $product->proDiscount > 0 ? "$" . $product->proPrice : " " }}</del>
+								$<strong
+									class="h2 text-danger">{{ number_format(($product->proPrice * (100 - $product->proDiscount)) / 100, 2) }}</strong><small
+									class="text-dark d-none"> Per Kg</small></span>
+							{{-- <span class="mt-0"><small>Per Kg</small></span> --}}
+						</p>
+						<p>Instock: {{ number_format($product->proStock, 0) }}</p>
 						<p><strong>Categories: </strong>{{ $product->category->catName }}</p>
 						<div class="" style="width: 300px">
 							@if ($cart && array_key_exists($product->id, $cart))
-								<div class="btn-group cart-btn border-0" style="width: 70%">
+								<div class="btn-group cart-btn border-0" style="width: 60%">
 									<button class="btn cart-btn border-0 col-3 text-center buttonCartMinus" value={{ $product->id }}>
 										<i class="fas fa-solid fa-minus m-auto"></i>
 									</button>
-									<span class="mx-auto d-flex justify-content-center align-items-center my-0 py-0 col"
+									{{-- <span class="mx-auto d-flex justify-content-center align-items-center my-0 py-0 col"
 										style="background: #f2802363">
-										{{ $cart[$product->id] }} </span>
+										{{ $cart[$product->id] }} </span> --}}
+									<input class="text-center inputCartItemQuantity" style="width: 75px;background: #f2802363;border: none"
+										inputmode="numeric" type="text" placeholder="" value={{ $cart[$product->id] }}
+										data-productId={{ $product->id }} min="1" max="99999">
 									<button class="btn cart-btn border-0 col-3 buttonAddToCart" value={{ $product->id }}>
 										<i class="fas fa-solid fa-plus m-auto"></i>
 									</button>
 								</div>
+								<a href="/removeFromCart/{{ $product->id }}"><span class="btn btn-pill btn-danger"><i
+											class="fas fa-solid fa-trash"></i>
+									</span></a>
 							@else
 								<button class="cart-btn border-0 buttonAddToCart" style="width: 70%" value={{ $product->id }}>
 									<i class="fas fa-shopping-cart"></i>Add to Cart
@@ -76,8 +92,13 @@
 						<a class="btn cart-btn border-0 mt-3 bg-primary" href="{{ route("user.shop") }}">back to shop</a>
 					</div>
 				</div>
+				<div class="col-8" style="white-space: pre-wrap">
+					<h3 class="mb-0">Product description:</h3>
+					<hr>
+					{{ $product->proDescription }}
+					<hr>
+				</div>
 				<hr>
-
 			</div>
 		</div>
 	</div>
@@ -125,6 +146,32 @@
 						alert('An error occurred while decreasing product quantity.');
 					}
 				});
+			});
+			$('.inputCartItemQuantity').on('change', function(e) {
+				var value = parseInt($(this).val());
+				var proId = $(this).attr('data-productId');
+				console.log($(this));
+				console.log(proId);
+				// Update product quantity in the cart using AJAX
+				if (value > 0 && value <= 99999) {
+					$.ajax({
+						url: '/updateCart/' + proId + '/' + value,
+						type: 'get',
+						success: function(response) {
+							// console.log(response);
+							// alert('Product quantity updated successfully.');
+							window.location.reload();
+							// alert(response['message']);
+						},
+						error: function(error) {
+							console.log(error);
+							alert('An error occurred while updating product quantity.');
+						}
+					})
+				} else {
+					alert('quantity in [1-99999]')
+					window.location.reload();
+				}
 			});
 		});
 	</script>

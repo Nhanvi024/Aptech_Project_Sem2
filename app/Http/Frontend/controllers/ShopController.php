@@ -112,7 +112,7 @@ class ShopController extends Controller
         };
         $product = Product::where('id', $id)->with('category')->first();
         if ($product == null) {
-            return redirect()->route('shop.index')->with('fail', 'Product not found');
+            return redirect()->route('user.shop')->with('fail', 'Product not found');
         }
         $user = null;
         $cartItems = [];

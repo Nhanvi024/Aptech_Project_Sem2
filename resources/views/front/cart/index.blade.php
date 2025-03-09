@@ -62,7 +62,7 @@
 														</button>
 														<input class="text-center inputCartItemQuantity" style="width: 75px;background: #f2802363;border: none"
 															inputmode="numeric" type="text" placeholder="" value={{ $cart[$item->id] }}
-															data-productId={{ $item->id }} min="1">
+															data-productId={{ $item->id }} min="1" max="99999">
 														{{-- <span class="mx-auto d-flex justify-content-center align-items-center my-0 py-0 col"
 													style="background: #f2802363">
 													{{ $cart[$item->id] }} </span> --}}

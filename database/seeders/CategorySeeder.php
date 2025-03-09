@@ -14,29 +14,47 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         //
+        // Category::create([
+        //     'catName' => 'Pome',
+        // ]);
+        // Category::create([
+        //     'catName' => 'Drupe',
+        // ]);
+        // Category::create([
+        //     'catName' => 'Berry',
+        // ]);
+        // Category::create([
+        //     'catName' => 'Aggregate fruit',
+        // ]);
+        // Category::create([
+        //     'catName' => 'Legumes',
+        // ]);
+        // Category::create([
+        //     'catName' => 'Capsules',
+        // ]);
+        // Category::create([
+        //     'catName' => 'Nuts',
+        // ]);
+        // Category::create([
+        //     'catName' => 'Multiple fruits',
+        // ]);
         Category::create([
-            'catName' => 'Pome',
+            'catName' => 'Vietnamese fruit',
         ]);
         Category::create([
-            'catName' => 'Drupe',
+            'catName' => 'Imported fruit',
         ]);
         Category::create([
-            'catName' => 'Berry',
+            'catName' => 'Fruit tray',
         ]);
         Category::create([
-            'catName' => 'Aggregate fruit',
+            'catName' => 'Pre-cut fruit',
         ]);
         Category::create([
-            'catName' => 'Legumes',
+            'catName' => 'Fruit gift',
         ]);
         Category::create([
-            'catName' => 'Capsules',
-        ]);
-        Category::create([
-            'catName' => 'Nuts',
-        ]);
-        Category::create([
-            'catName' => 'Multiple fruits',
+            'catName' => 'Premium fruit gift',
         ]);
     }
 }

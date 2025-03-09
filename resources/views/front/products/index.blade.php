@@ -38,10 +38,10 @@
 					<form action="" method="GET" id="formFilter">
 						<div class="input-group mb-3">
 							<input type="text" class="form-control" placeholder="Search by name..." aria-label="Search" name="nameFil"
-								aria-describedby="basic-addon2" value={{ request()->nameFil ?: "" }}>
-							<div class="input-group-append">
+								aria-describedby="basic-addon2" value="{{ request()->nameFil ?: "" }}">
+							{{-- <div class="input-group-append">
 								<button class="btn btn-outline-secondary" type="button">Search</button>
-							</div>
+							</div> --}}
 						</div>
 						<div class="filter-price">
 							<label class="h4 strong" for="priceRange">Price range:</label>
@@ -87,11 +87,11 @@
 									</div>
 									<h3 style="width: 80%; margin: auto;height: 50px;text-overflow:ellipsis; overflow: hidden;white-space: nowrap;">
 										{{ $item->proName }}</h3>
-									<p class="product-price">
-										<span>Per Kg</span>
-										<del class=" h6 text-secondary text-sm">{{ $item->proDiscount > 0 ? "$" . $item->proPrice : "" }}</del>
-										${{ ($item->proPrice * (100 - $item->proDiscount)) / 100 }}
-									</p>
+									<span class="product-price text-danger">
+										<del class="h6 text-secondary text-sm">{{ $item->proDiscount > 0 ? "$" . $item->proPrice : " " }}</del>
+										$<strong
+											class="h4 text-danger">{{ number_format(($item->proPrice * (100 - $item->proDiscount)) / 100, 2) }}</strong><small
+											class="text-dark d-none"> Per Kg</small></span>
 
 									<p class="product-stock">
 										Stock: {{ number_format($item->proStock, 0) }}

@@ -127,6 +127,9 @@
 							<input class="form-control" multiple type="file" name="image[]" id="">
 						</div>
 					@endif
+					@error("image")
+						<span class="text-danger">*** {{ $message }} </span>
+					@enderror
 					<div class="">
 						<label for="">Description: </label>
 						<textarea class="form-control" name="proDescription" id="" rows="4" placeholder="Enter description">{{ old("proDescription", $product->proDescription) }}</textarea>
