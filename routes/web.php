@@ -9,6 +9,7 @@ use App\Http\Backend\Controllers\OrderController;
 use App\Http\Backend\Controllers\UserController;
 use App\Http\Backend\Controllers\ProductsController;
 use App\Http\Backend\Controllers\PayPalController;
+use App\Http\Backend\Controllers\PostController;
 use App\Http\Frontend\controllers\CartController;
 use App\Http\Frontend\controllers\ShopController;
 use Illuminate\Container\Attributes\Auth;
@@ -73,6 +74,18 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/orderDetails/{id}', [OrderController::class, 'orderDetails'])->name('order.orderDetails');
         Route::post('/orderDetails', [OrderController::class, 'updateStatus'])->name('order.updateStatus');
     });
+
+    Route::middleware('auth:admin')->group(function () {
+        Route::controller(PostController::class)->group(function () {
+            Route::get('/post', 'allPost')->name('posts');
+            Route::get('/post/new', 'addPost')->name('add.post');
+            Route::post('/post/new', 'store')->name('store.post');
+            Route::get('/post/edit/{id}', 'edit')->name('edit.post');
+            Route::post('/post/edit/{id}', 'update')->name('update.post');
+            Route::get('/post/status/{id}', 'status')->name('status.post');
+            Route::post('/post/change-visibility', 'changeVisibility')->name('change.visibility');
+        });
+    });
 });
 
 /**
@@ -133,4 +146,10 @@ Route::name('user.')->group(function () {
         Route::get('/contact/create', 'create')->name('contact.create');
         Route::post('/contact/create', 'store')->name('contact.store');
     });
+
+    //news
+    Route::get('/news', [PostController::class, 'news'])->name('news');
+    Route::get('/news/{id}', [PostController::class, 'singleNews'])->name('single.news');
+    Route::get('/news/{tag}', [PostController::class, 'postsByTag'])->name('posts.byTag');
+    // End news
 });

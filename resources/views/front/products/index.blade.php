@@ -125,40 +125,52 @@
 					<!-- Pagination -->
 					<div class="row">
 						<div class="col-lg-12 text-center">
+
 							<div class="pagination-wrap">
 								<ul>
-									<li>
-										@if ($products->currentPage() > 1)
-											{{-- <a href="{{ $products->previousPageUrl() }}"><i class="fas fa-angle-left"></i></a> --}}
+									@if ($products->currentPage() > 1)
+										<li>
 											<a href="{{ $products->appends(request()->except("page"))->previousPageUrl() }}"><i
 													class="fas fa-angle-left"></i></a>
-										@endif
-									</li>
-									@for ($i = 1; $i <= $products->lastPage(); $i++)
-										@if ($products->currentPage() == $i)
-											<li>
-												<a class="active">{{ $i }}</a>
-											</li>
-										@else
-											<li>
-												{{-- <a href="{{ $products->url($i) }}">{{ $i }}</a> --}}
-												<a href="{{ $products->appends(request()->except("page"))->url($i) }}">{{ $i }}</a>
-											</li>
+										</li>
+									@endif
+									@if ($products->currentPage() > 3)
+										<li>
+											<a href="{{ $products->appends(request()->except("page"))->url(1) }}">1</a>
+										</li>
+										<li> ... </li>
+									@endif
+									@for ($i = $products->currentPage() - 2; $i <= $products->currentPage() + 2; $i++)
+										@if ($i > 0 && $i <= $products->lastPage())
+											@if ($products->currentPage() == $i)
+												<li>
+													<a class="active">{{ $i }}</a>
+												</li>
+											@else
+												<li>
+													<a href="{{ $products->appends(request()->except("page"))->url($i) }}">{{ $i }}</a>
+												</li>
+											@endif
 										@endif
 									@endfor
-									<li>
-										@if ($products->currentPage() < $products->lastPage())
+									@if ($products->currentPage() < $products->lastPage() - 2)
+										<li> ... </li>
+										<li>
+											<a
+												href="{{ $products->appends(request()->except("page"))->url($products->lastPage()) }}">{{ $products->lastPage() }}</a>
+										</li>
+									@endif
+									@if ($products->currentPage() < $products->lastPage())
+										<li>
 											<a href="{{ $products->appends(request()->except("page"))->nextPageUrl() }}"><i
 													class="fas fa-angle-right"></i></a>
-											{{-- <a href="{{ $products->nextPageUrl() }}"><i class="fas fa-angle-right"></i></a> --}}
-										@endif
-									</li>
+										</li>
+									@endif
 								</ul>
 							</div>
 						</div>
 					</div>
 					<!-- End Pagination -->
-
 
 				</div>
 			</div>

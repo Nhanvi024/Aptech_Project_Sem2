@@ -46,7 +46,7 @@ class ProductsController extends Controller
         if (isset($request->seasonFil) && ($request->seasonFil != null)) {
             $query->where('proSeason', $request->seasonFil);
         }
-        $result = $query->with('category')->paginate(perPage: 2);
+        $result = $query->with('category')->paginate(perPage: 15);
         $data = [
             'pageTitle' => 'Products Manager',
             'products' => $result,
@@ -96,7 +96,7 @@ class ProductsController extends Controller
             'proStock' => 'required|numeric|min:1|max:1000000',
             'proDiscount' => 'required|numeric|min:0|max:100',
             'category_id' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|array',
+            'image' => 'required|array',
             'image.*' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             'proDescription' => 'required|string|min:1|max:20000',
         ]);

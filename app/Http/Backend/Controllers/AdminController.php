@@ -20,11 +20,37 @@ class AdminController extends Controller
         return view('back.pages.dasboard.admin.dashboard', $data);
     }
 
-    public function orderManage()
+    public function orderManage(Request $request)
     {
+        $query = Order::query();
+        if (isset($request->status) && ($request->status != null)) {
+            $query->where('status', $request->status);
+        };
+        if (isset($request->time) && ($request->time != null)) {
+            switch ($request->time) {
+                case 'today':
+                    $query->whereDate('orderDate', now());
+                    break;
+                case 'yesterday':
+                    $query->whereDate('orderDate', now()->subDay());
+                    break;
+                case 'week':
+                    $query->whereBetween('orderDate', [now()->startOfWeek(), now()->endOfWeek()]);
+                    break;
+                case 'month':
+                    $query->whereBetween('orderDate', [now()->startOfMonth(), now()->endOfMonth()]);
+                    break;
+                case 'year':
+                    $query->whereYear('orderDate', now()->year);
+                    break;
+                default:
+                    break;
+            }
+        }
+        $result = $query->orderBy('id', 'DESC')->paginate(perPage: 15);
         $data = [
             'pageTitle' => 'Order Manage',
-            'orders' => Order::orderBy('id', 'DESC')->paginate(15),
+            'orders' => $result,
         ];
         return view('back.pages.dasboard.admin.order-manage', $data);
     }
@@ -36,11 +62,41 @@ class AdminController extends Controller
         ];
         return view('back.pages.dasboard.admin.admin-manage', $data);
     }
-    public function userManage()
+    public function userManage(Request $request)
     {
+        $query = User::query();
+        if (isset($request->status) && ($request->status != null)) {
+            $query->where('blocked', $request->status);
+        };
+        if (isset($request->orderBy) && ($request->orderBy != null)) {
+            switch ($request->orderBy) {
+                case 1:
+                    $query->orderBy('id', 'asc');
+                    break;
+                case 2:
+                    $query->orderBy('id', 'desc');
+                    break;
+                case 3:
+                    $query->orderBy('blocked', 'asc');
+                    break;
+                case 4:
+                    $query->orderBy('blocked', 'desc');
+                    break;
+                default:
+                    break;
+            }
+        };
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('username', 'LIKE', '%' . $search . '%')
+                    ->orWhere('email', 'LIKE', '%' . $search . '%');
+            });
+        }
+        $result = $query->paginate(perPage: 15);
         $data = [
             'pageTitle' => 'User Manage',
-            'users' => User::all(),
+            'users' => $result,
         ];
         return view('back.pages.dasboard.user.user-manage', $data);
     }
@@ -89,12 +145,10 @@ class AdminController extends Controller
     }
     public function changePasswordPost(Request $request)
     {
-        // dd($request->id);
         $admin = Admin::find($request->id);
         $request->validate([
             'password' => 'required|min:8|confirmed',
         ]);
-        // dd($admin);
         $admin->password = bcrypt($request->password);
         $admin->save();
         // return back()->with('success', 'Password has been updated successfully');

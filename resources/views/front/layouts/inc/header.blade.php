@@ -16,11 +16,15 @@
 						<!-- menu start -->
 						<nav class="main-menu">
 							<ul>
-								<li class="current-list-item"><a href="/">Home</a></li>
-								<li><a href="/about_us">About Us</a></li>
-								<li><a href="/cart">Cart</a></li>
-								<li><a href="/">News</a></li>
-								<li><a href="/contact">Contact</a></li>
+								<li class="{{ $_SERVER["REQUEST_URI"] == "/" ? "current-list-item " : " " }} "><a href="/">Home</a></li>
+								<li class="{{ str_contains($_SERVER["REQUEST_URI"], "/about_us") ? "current-list-item " : " " }} "><a
+										href="/about_us">About Us</a></li>
+								<li class="{{ str_contains($_SERVER["REQUEST_URI"], "/cart") ? "current-list-item " : " " }} "><a
+										href="/cart">Cart</a></li>
+								<li class="{{ str_contains($_SERVER["REQUEST_URI"], "/news") ? "current-list-item " : " " }} "><a
+										href="/news">News</a></li>
+								<li class="{{ str_contains($_SERVER["REQUEST_URI"], "/contact") ? "current-list-item " : " " }} "><a
+										href="/contact">Contact</a></li>
 								<li class="">
 									<div class="header-icons">
 										@if (isset($user))
@@ -84,7 +88,6 @@
 																	?>
 																@endforeach
 															@endif
-															{{-- @if ($cartItems?->isEmpty()) --}}
 															@if ($cartItems != null)
 																@if (count($cartItems) == 0)
 																	<tr>
@@ -96,7 +99,6 @@
 															@endif
 														</tbody>
 													</table>
-													{{-- cart total value --}}
 													<div class=" text-center mt-3 mb-2 mx-auto">
 														<h4 class="text-primary">Total: ${{ $totalValue }}</h4>
 													</div>
@@ -106,12 +108,10 @@
 												</div>
 											</div>
 										</span>
-										{{-- <a class="mobile-hide search-bar-icon" href="#"><i class="fas fa-search"></i></a> --}}
 									</div>
 								</li>
 							</ul>
 						</nav>
-						{{-- <a class="mobile-show search-bar-icon" href="#"><i class="fas fa-search"></i></a> --}}
 						<div class="mobile-menu"></div>
 						<!-- menu end -->
 					</div>
@@ -119,24 +119,6 @@
 			</div>
 		</div>
 	</div>
-	<!-- search area -->
-	{{-- <div class="search-area">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-12">
-					<span class="close-btn"><i class="fas fa-window-close"></i></span>
-					<div class="search-bar">
-						<div class="search-bar-tablecell">
-							<h3>Search For:</h3>
-							<input type="text" placeholder="Keywords">
-							<button type="submit">Search <i class="fas fa-search"></i></button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div> --}}
-	<!-- end search arewa -->
 	<!-- end header -->
 	<script>
 		$(document).ready(function() {

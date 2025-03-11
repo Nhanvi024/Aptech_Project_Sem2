@@ -80,7 +80,7 @@
 				</div>
 			</div>
 			<div class="table-responsive">
-				<table class="table card-table table-vcenter text-nowrap datatable">
+				<table class="table card-table table-striped table-hover table-vcenter text-nowrap datatable">
 					<thead>
 						<th>ID </th>
 						<th>Name</th>

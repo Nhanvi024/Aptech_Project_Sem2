@@ -48,6 +48,6 @@ class OrderController extends Controller
         $order->deliveryDate = now();
         $order->save();
         // return back()->with('success', 'Status has been updated');
-        return redirect()->route('admin.order.manage')->with('success', 'Order finished !!!');
+        return redirect()->back()->with('success', 'Order finished !!!');
     }
 }

@@ -12,21 +12,72 @@
 							ORDERS MANAGEMENT
 						</h2>
 					</div>
-					<!-- Page title actions -->
 				</div>
 			</div>
 		</div>
 		<!-- Page body -->
 		<div class="page-body">
 			<div class="container-xl">
-				<x-form-alert />
+				<div class="col-12">
+					<div class="card mb-3">
+						<div class="card-body border-bottom">
+							<form method="GET" action="{{ route("admin.order.manage") }}">
+								<div class="row">
+									<div class="col-3">
+										<label class="form-label">Status</label>
+										<select name="status" class="form-select">
+											<option value="">All status</option>
+											<option value= '0' {{ request("status") == "0" ? "selected" : "" }}>
+												Pending
+											</option>
+											<option value= '1' {{ request("status") == "1" ? "selected" : "" }}>
+												Finished
+											</option>
+										</select>
+									</div>
+									<div class="col-3">
+										<label class="form-label">Time</label>
+										<select name="time" class="form-select">
+											<option value= '' {{ request("time") == "" ? "selected" : "" }}>
+												All time
+											</option>
+											<option value= 'today' {{ request("time") == "today" ? "selected" : "" }}>
+												Today
+											</option>
+											<option value= 'yesterday' {{ request("time") == "yesterday" ? "selected" : "" }}>
+												Yesterday
+											</option>
+											<option value= 'week' {{ request("time") == "week" ? "selected" : "" }}>
+												This week
+											</option>
+											<option value= 'month' {{ request("time") == "month" ? "selected" : "" }}>
+												This month
+											</option>
+											<option value= 'year' {{ request("time") == "year" ? "selected" : "" }}>
+												This year
+											</option>
+											{{-- options today, yesterday, week, month, year --}}
+
+										</select>
+									</div>
+									<div class="col-md-3 d-flex">
+										<button type="submit" class="btn btn-primary mt-auto me-2">Apply</button>
+										<a href="{{ route("admin.order.manage") }} " class="btn btn-warning mt-auto">Reset</a>
+									</div>
+							</form>
+						</div>
+					</div>
+				</div>
+				<div class="col-12">
+					<x-form-alert />
+				</div>
 
 				<div class="table-responsive" style="height: 65vh">
-					<table class="table table-striped">
-						<thead>
+					<table class="table table-striped table-hover text-nowrap">
+						<thead class="sticky-top z-1">
 							<tr>
-								{{-- <th class="text-white bg-secondary">id</th> --}}
-								{{-- <th class="text-white bg-secondary">UserId</th> --}}
+								<th class="text-white bg-secondary text-center">id</th>
+								<th class="text-white bg-secondary text-center">User</th>
 								<th class="text-white bg-secondary">Order Name</th>
 								<th class="text-white bg-secondary">Order Phone</th>
 								<th class="text-white bg-secondary">Shipping Address</th>
@@ -41,11 +92,11 @@
 						<tbody>
 							@foreach ($orders as $item)
 								<tr class="">
-									{{-- <td class="text-center">{{ $item->id }}</td> --}}
-									{{-- <td class="text-center">{{ $item->userId }}</td> --}}
+									<td class="text-center">{{ $item->id }}</td>
+									<td class="text-center">{{ $item->userId ?: "Guess" }}</td>
 									<td>{{ $item->orderName }}</td>
 									<td>{{ $item->orderPhone }}</td>
-									<td>{{ $item->shippingAddress }}</td>
+									<td>{{ Str::limit($item->shippingAddress, 15, " ...") }}</td>
 									<td>{{ $item->finalPrice }}</td>
 									<td
 										class="h5 {{ -now()->addHours(7)->diffInHours($item->orderDate) > 2 && $item->status == 0 ? "text-danger " : " " }} {{ $item->status == 1 ? "text-success " : " " }}">

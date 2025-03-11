@@ -18,43 +18,47 @@
 		<!-- Page body -->
 		<div class="page-body">
 			<div class="container-xl">
-				{{-- <div class="px-0 my-0">
-					<form class="col-12 row mx-0 px-0" method="get">
-						<div class="col-3 my-1 input-icon" style="height: fit-content">
-							<span class="input-icon-addon ms-1">
-								<!-- Download SVG icon from http://tabler-icons.io/i/search -->
-								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
-									stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-									<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-									<path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path>
-									<path d="M21 21l-6 -6"></path>
-								</svg>
-							</span>
-							<input type="text" name="nameFil" id="" class="form-control" placeholder="Enter name to search"
-								value="{{ request()->nameFil }}">
+				<div class="col-12">
+					<div class="card">
+						<div class="card-body border-bottom py-3">
+							<form method="GET" action="{{ route("admin.user.manage") }}">
+								<div class="row">
+									<div class=" col-3">
+										<label class="form-label">Search</label>
+										<input type="text" class="form-control form-control" name="search" value="{{ request("search") }}"
+											placeholder="Enter name or code">
+									</div>
+									<div class="col-3">
+										<label class="form-label">Order by</label>
+										<select name="orderBy" class="form-select">
+											<option value="1" {{ request("orderBy") == "1" ? "selected" : "" }}>Id ASC</option>
+											<option value="2" {{ request("orderBy") == "2" ? "selected" : "" }}>Id DESC</option>
+											<option value="3" {{ request("orderBy") == "3" ? "selected" : "" }}>Active first</option>
+											<option value="4" {{ request("orderBy") == "4" ? "selected" : "" }}>Blocked first</option>
+										</select>
+									</div>
+									<div class="col-3">
+										<label class="form-label">Status</label>
+										<select name="status" class="form-select">
+											<option value="">All status</option>
+											<option value='1' {{ request("status") == "1" ? "selected" : "" }}>
+												Blocked
+											</option>
+											<option value='0' {{ request("status") == "0" ? "selected" : "" }}>
+												Active
+											</option>
+										</select>
+									</div>
+									<div class="col-md-3 d-flex">
+										<button type="submit" class="btn btn-primary mt-auto me-2">Apply</button>
+										<a href="{{ route("admin.user.manage") }} " class="btn btn-warning mt-auto">Reset</a>
+									</div>
+							</form>
 						</div>
-						<div class="col-3 col-lg-2 my-1">
-							<select class="form-select" name="orderByFil" id="">
-								<option value="">-- Order by --</option>
-								<option value='1' {{ request()->orderByFil == "1" ? "selected" : "" }}>
-									level Asc</option>
-								<option value='2' {{ request()->orderByFil == "2" ? "selected" : "" }}>
-									level Desc</option>
-								<option value='3' {{ request()->orderByFil == "3" ? "selected" : "" }}>
-									Status Active</option>
-								<option value='4' {{ request()->orderByFil == "4" ? "selected" : "" }}>
-									Status Blocked</option>
-							</select>
-						</div>
-						<div class="col text-end my-1">
-							<button type="submit" class=" btn btn-primary" style="width: fit-content">Apply</button>
-							<a class="btn btn-primary" style="width: fit-content;" href="{{ route("admin.products.resetFilter") }}">Reset
-								Filter</a>
-						</div>
-					</form>
-				</div> --}}
+					</div>
+				</div>
 				<div class="table-responsive" style="height: 65vh">
-					<table class="table table-striped">
+					<table class="table table-striped tablehover">
 						<thead>
 							<tr class="bg-danger">
 								<th class="text-white bg-secondary">id</th>
@@ -94,6 +98,57 @@
 						</tbody>
 					</table>
 				</div>
+				<!-- Pagination -->
+				<div class="row">
+					<div class="col-lg-12 text-center">
+						<div class="mt-2">
+							Showing {{ $users->firstItem() }} to {{ $users->lastItem() }} of {{ $users->total() }} results
+						</div>
+						<div class="pagination-wrap">
+							<ul>
+								@if ($users->currentPage() > 1)
+									<li>
+										<a href="{{ $users->appends(request()->except("page"))->previousPageUrl() }}"><i
+												class="fas fa-angle-left"></i></a>
+									</li>
+								@endif
+								@if ($users->currentPage() > 3)
+									<li>
+										<a href="{{ $users->appends(request()->except("page"))->url(1) }}">1</a>
+									</li>
+									<li> ... </li>
+								@endif
+								@for ($i = $users->currentPage() - 2; $i <= $users->currentPage() + 2; $i++)
+									@if ($i > 0 && $i <= $users->lastPage())
+										@if ($users->currentPage() == $i)
+											<li>
+												<a class="active">{{ $i }}</a>
+											</li>
+										@else
+											<li>
+												<a href="{{ $users->appends(request()->except("page"))->url($i) }}">{{ $i }}</a>
+											</li>
+										@endif
+									@endif
+								@endfor
+								@if ($users->currentPage() < $users->lastPage() - 2)
+									<li> ... </li>
+									<li>
+										<a
+											href="{{ $users->appends(request()->except("page"))->url($users->lastPage()) }}">{{ $users->lastPage() }}</a>
+									</li>
+								@endif
+								@if ($users->currentPage() < $users->lastPage())
+									<li>
+										<a href="{{ $users->appends(request()->except("page"))->nextPageUrl() }}"><i
+												class="fas fa-angle-right"></i></a>
+									</li>
+								@endif
+							</ul>
+						</div>
+					</div>
+				</div>
+				<!-- End Pagination -->
 			</div>
 		</div>
 

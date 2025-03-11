@@ -79,8 +79,8 @@
 
 							<div class="col text-end my-1">
 								<button type="submit" class=" btn btn-primary" style="width: fit-content">Apply</button>
-								<a class="btn btn-primary" style="width: fit-content;" href="{{ route("admin.products.resetFilter") }}">Reset
-									Filter</a>
+								<a class="btn btn-warning" style="width: fit-content;"
+									href="{{ route("admin.products.resetFilter") }}">Reset</a>
 							</div>
 						</form>
 					</div>
@@ -91,10 +91,9 @@
 		<!-- Page body -->
 		<div class="page-body">
 			<div class="container-xl">
-				<x-form-alert />
-
-
-
+				<div class="col-12">
+					<x-form-alert />
+				</div>
 				<form action="{{ route("admin.products.proTableActions") }}" method="POST">
 					@csrf
 					<div>
@@ -109,9 +108,8 @@
 									style="width: 75px; height: 23px;"></span>
 						</span>
 					</div>
-					{{-- @dd($products[21]->proImageURL[0]) --}}
 					<div class="table-responsive" style="height: 65vh">
-						<table class="table  table-hover table-bordered align-middle bg-azure-lt">
+						<table class="table table-hover table-bordered align-middle bg-azure-lt">
 							<thead class="sticky-top z-1">
 								<tr class="text-center">
 									<th class="text-white bg-secondary"><input type="checkbox" style="width: 15px;height: 15px;"

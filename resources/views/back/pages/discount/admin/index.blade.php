@@ -74,16 +74,16 @@
 				</div>
 			</div>
 			<div class="table-responsive">
-				<table class="table card-table table-vcenter text-nowrap datatable">
+				<table class="table card-table table-striped table-hover table-vcenter text-nowrap datatable">
 					<thead>
 						<th>ID </th>
-						<th>Discount code</th>
+						<th>code</th>
 						<th>Name</th>
 						<th>Type</th>
-						<th>Discount Value</th>
+						<th>Value</th>
 						<th>Max Value</th>
 						<th>Quantity</th>
-						<th>Minimum order value</th>
+						<th>Quantity</th>
 						<th>Uses/user</th>
 						<th>Start date</th>
 						<th>End date</th>
