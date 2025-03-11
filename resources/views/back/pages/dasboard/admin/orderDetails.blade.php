@@ -130,7 +130,7 @@
 	</div>
 	<script>
 		$(document).ready(function() {
-			// btnFinish only show when both checkSender and checkProducts are checked
+			// btnFinish only available when both checkSender and checkProducts are checked
 			$("#checkSender").change(function() {
 				if ($("#checkSender").is(":checked") && $("#checkProducts").is(":checked")) {
 					$("#btnFinish").prop("disabled", false);
@@ -144,8 +144,7 @@
 				} else {
 					$("#btnFinish").prop("disabled", true);
 				}
-			})
-
+			});
 		});
 	</script>
 

@@ -173,7 +173,7 @@ class CheckOutController extends Controller
             'shippingName' => 'required|string|min:3|max:255',
             'shippingPhone' => 'required|string|min:10|max:16',
             'shippingAddress' => 'required|string',
-            'note' => 'string|min:3|max:10000',
+            'note' => 'max:10000',
         ]);
 
         //// get userId if user logged in, $userId = null if user not logged in

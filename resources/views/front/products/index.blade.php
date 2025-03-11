@@ -63,8 +63,9 @@
 							@foreach ($categories as $item)
 								<div class="form-check">
 									<input type="checkbox" class="cateCheck" name="categoryFil[]" value="{{ $item->id }}"
-										id="{{ $item->catName }}" {{ in_array($item->id, [request()->categoryFil][0] ?: []) ? "checked" : "" }}>
-									<label for="{{ $item->catName }}">
+										id="{{ str_replace(" ", "", $item->catName) }}"
+										{{ in_array($item->id, [request()->categoryFil][0] ?: []) ? "checked" : "" }}>
+									<label for="{{ str_replace(" ", "", $item->catName) }}">
 										{{ $item->catName }}
 									</label>
 								</div>

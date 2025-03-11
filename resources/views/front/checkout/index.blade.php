@@ -102,11 +102,12 @@
 															@enderror
 														</p>
 														<p>
-															<textarea class="form-control" name="note" id="note" cols="30" rows="10" placeholder="Order note" maxlength="10000"></textarea>
+															<textarea class="form-control" name="note" id="note" cols="30" rows="10" placeholder="Order note"
+															 maxlength="10000"></textarea>
 														</p>
-                                                        @error("note")
-                                                        <span class="text-danger">*** {{ $message }} </span>
-                                                    @enderror
+														@error("note")
+															<span class="text-danger">*** {{ $message }} </span>
+														@enderror
 													</div>
 												</div>
 											</div>
@@ -267,11 +268,10 @@
 										<div class="">
 											<label for="">Final Price</label>
 											<input class="form-control" type="text" id="finalPrice" name="finalPrice"
-												value="{{ number_format($subtotal + $shipping - $discountAmount, 2) }}">
+												value="{{ number_format($subtotal + $shipping - $discountAmount, 2, ".", "") }}">
 										</div>
 										<input class="form-control" type="text" id="order_id" name="order_id" placeholder="order_id">
 									</div>
-
 								</div>
 							</div>
 						</div>

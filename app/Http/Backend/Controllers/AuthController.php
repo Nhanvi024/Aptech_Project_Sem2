@@ -373,7 +373,7 @@ class AuthController extends Controller
         if (Session::has('sessionExpired')) {
             return redirect()->route('user.user.login')->with('fail', Session::get('sessionExpired'));
         }
-        return redirect()->route('user.user.login')->with('fail', 'You have been logged out.');
+        return redirect()->route('user.shop')->with('fail', 'You have logged out.');
     }
     public function userForgotPasswordForm()
     {
