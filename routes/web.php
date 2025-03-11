@@ -5,6 +5,7 @@ use App\Http\Backend\Controllers\AuthController;
 use App\Http\Backend\Controllers\CartsController;
 use App\Http\Backend\Controllers\CategoriesController;
 use App\http\Backend\Controllers\CheckOutController;
+use App\Http\Backend\Controllers\OrderController;
 use App\Http\Backend\Controllers\UserController;
 use App\Http\Backend\Controllers\ProductsController;
 use App\Http\Backend\Controllers\PayPalController;
@@ -50,6 +51,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('/products', ProductsController::class);
         Route::resource('/categories', CategoriesController::class);
         Route::get('/logout', [AuthController::class, 'adminLogout'])->name('admin.logout');
+        Route::get('/orderDetails/{id}', [OrderController::class, 'orderDetails'])->name('order.orderDetails');
+        Route::post('/orderDetails', [OrderController::class, 'updateStatus'])->name('order.updateStatus');
     });
 });
 
@@ -79,6 +82,8 @@ Route::name('user.')->group(function () {
             Route::get('/logout', [AuthController::class, 'userLogout'])->name('user.logout');
             Route::get('/profile', 'profile')->name('user.profile');
             Route::put('/profile', 'updateProfile')->name('user.profileUpdate');
+            Route::get('/profile/updatePassword', 'profileUpdatePassword')->name('user.profileUpdatePassword');
+            Route::post('/profile/updatePassword', 'profileUpdatePasswordPost')->name('user.profileUpdatePasswordPost');
         });
         Route::get('/logout', [AuthController::class, 'userLogout'])->name('user.logout');
     });

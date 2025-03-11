@@ -16,9 +16,9 @@ return new class extends Migration
             $table->string('proName');
             $table->decimal('proCost', 10, 2);
             $table->decimal('proPrice', 10, 2);
-            $table->string('proSeason');
-            $table->string('proOrigin')->after('proSeason');
             $table->integer('proStock');
+            $table->string('proSeason');
+            $table->string('proOrigin');
             $table->smallInteger('proDiscount')->default(0);
             $table->boolean('proActive')->default(true);
             $table->smallInteger('proSaleStatus')->default(0);

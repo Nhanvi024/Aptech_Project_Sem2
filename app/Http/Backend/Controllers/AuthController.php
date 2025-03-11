@@ -331,7 +331,7 @@ class AuthController extends Controller
             $user->save();
 
             //// save token_login to Cookie
-            Cookie::queue('token_login', $token_login);
+            Cookie::queue('token_login', $token_login, 43200);
 
             //// put $user to Session
             Session::put('user', $user);
@@ -361,6 +361,7 @@ class AuthController extends Controller
             $user->token_rememberMe = null;
             $user->save();
         }
+        // dd(Session::get('sessionExpired'));
 
         //// Logout from Laravel session and clear user from Session
         Auth::guard('web')->logout();
@@ -369,8 +370,10 @@ class AuthController extends Controller
         //// clear token_login and token_remember me from Cookie
         Cookie::queue(Cookie::forget('token_login'));
         Cookie::queue(Cookie::forget('token_rememberMe'));
-
-        return redirect()->route('user.shop')->with('fail', 'You have been logged out.');
+        if (Session::has('sessionExpired')) {
+            return redirect()->route('user.user.login')->with('fail', Session::get('sessionExpired'));
+        }
+        return redirect()->route('user.user.login')->with('fail', 'You have been logged out.');
     }
     public function userForgotPasswordForm()
     {

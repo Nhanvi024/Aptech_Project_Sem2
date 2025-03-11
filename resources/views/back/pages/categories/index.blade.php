@@ -51,9 +51,9 @@
 									<td>{{ $item->catName }}</td>
 									<td>
 										@if ($item->catStatus == 1)
-											<span class="badge bg-success">Active</span>
+											<span class="badge bg-success text-white">Active</span>
 										@else
-											<span class="badge bg-danger">Inactive</span>
+											<span class="badge bg-danger text-white">Inactive</span>
 										@endif
 									</td>
 									<td class="text-end">
@@ -67,8 +67,5 @@
 		<!-- End Page body -->
 
 
-		<!-- Page foot -->
-		@include("back.layouts.inc.footer")
-		<!-- End Page foot -->
 	</div>
 @endsection

@@ -46,7 +46,7 @@ class ProductsController extends Controller
         if (isset($request->seasonFil) && ($request->seasonFil != null)) {
             $query->where('proSeason', $request->seasonFil);
         }
-        $result = $query->with('category')->get();
+        $result = $query->with('category')->paginate(perPage: 15);
         $data = [
             'pageTitle' => 'Products Manager',
             'products' => $result,
@@ -82,18 +82,21 @@ class ProductsController extends Controller
     public function store(Request $request)
     {
         // dd($request);
+        if ($request->proPrice < $request->proCost) {
+            return redirect()->back()->with('fail', 'Price must be greater than cost');
+        }
 
         //// validate infos
         $resulstAdd = $request->validate([
             'proName' => 'required|min:3|max:255|unique:products,proName',
-            'proCost' => 'required|numeric|min:1|max:1000000',
-            'proPrice' => 'required|numeric|min:1|max:1000000',
+            'proCost' => 'required|numeric|min:0.01|max:1000000',
+            'proPrice' => 'required|numeric|min:0.01|max:1000000',
             'proSeason' => 'required',
             'proOrigin' => 'required',
             'proStock' => 'required|numeric|min:1|max:1000000',
             'proDiscount' => 'required|numeric|min:0|max:100',
             'category_id' => 'required',
-            'image' => 'required|array',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|array',
             'image.*' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             'proDescription' => 'required|string|min:1|max:20000',
         ]);
@@ -134,7 +137,7 @@ class ProductsController extends Controller
     {
         // ensure cost < price
         if ($request->proCost > $request->proPrice) {
-            return redirect()->back()->with('fail', 'Cost CAN NOT > PRICE');
+            return redirect()->back()->with('fail', 'Price must be greater than cost');
         }
 
         // validate infos
@@ -146,14 +149,14 @@ class ProductsController extends Controller
                 'max:255',
                 Rule::unique('products', 'proName')->ignore($product->id)
             ],
-            'proCost' => 'required|numeric|min:1|max:1000000',
-            'proPrice' => 'required|numeric|min:1|max:1000000',
+            'proCost' => 'required|numeric|min:0.0|max:1000000',
+            'proPrice' => 'required|numeric|min:0.0|max:1000000',
             'proSeason' => 'required',
             'proOrigin' => 'required',
-            'proStock' => 'required|numeric|min:0|max:1000000',
+            'proStock' => 'required|numeric|min:1|max:1000000',
             'proDiscount' => 'required|numeric|min:0|max:100',
             'category_id' => 'required',
-            'image' => 'array',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|array',
             'image.*' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             'proDescription' => 'required|string|min:1|max:20000',
         ]);

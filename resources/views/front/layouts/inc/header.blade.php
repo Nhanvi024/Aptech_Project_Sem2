@@ -17,33 +17,10 @@
 						<nav class="main-menu">
 							<ul>
 								<li class="current-list-item"><a href="/">Home</a></li>
-								<li><a href="about.html">About</a></li>
-								<li><a href="#">Pages</a>
-									<ul class="sub-menu">
-										<li><a href="404.html">404 page</a></li>
-										<li><a href="about.html">About</a></li>
-										<li><a href="cart.html">Cart</a></li>
-										<li><a href="checkout.html">Check Out</a></li>
-										<li><a href="contact.html">Contact</a></li>
-										<li><a href="news.html">News</a></li>
-										<li><a href="shop.html">Shop</a></li>
-									</ul>
-								</li>
-								<li><a href="news.html">News</a>
-									<ul class="sub-menu">
-										<li><a href="news.html">News</a></li>
-										<li><a href="single-news.html">Single News</a></li>
-									</ul>
-								</li>
-								<li><a href="contact.html">Contact</a></li>
-								<li><a href="shop.html">Shop</a>
-									<ul class="sub-menu">
-										<li><a href="shop.html">Shop</a></li>
-										<li><a href="checkout.html">Check Out</a></li>
-										<li><a href="single-product.html">Single Product</a></li>
-										<li><a href="cart.html">Cart</a></li>
-									</ul>
-								</li>
+								<li><a href="/">About</a></li>
+								<li><a href="/cart">Cart</a></li>
+								<li><a href="/">News</a></li>
+								<li><a href="/">Contact</a></li>
 								<li class="">
 									<div class="header-icons">
 										@if (isset($user))
@@ -59,7 +36,7 @@
 												</div>
 											</span>
 										@else
-											<a class="btn btn-pill text-white my-0 py-0" href="{{ route("user.user.login") }}">Login</a>
+											<a class="btn btn-pill text-white my-0 py-2" href="{{ route("user.user.login") }}">Login</a>
 										@endif
 										<span class="dropdown show">
 											<a class="dropdown-toggle" href="#" aria-expanded="false" role="button" data-bs-toggle="dropdown">

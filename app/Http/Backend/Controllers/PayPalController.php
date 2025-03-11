@@ -4,9 +4,11 @@ namespace App\http\Backend\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
+use App\Models\Discount;
 use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Http;
@@ -151,21 +153,26 @@ class PayPalController extends Controller
             }
             //// end clear cart
 
+            //// change Discount count
+            $discountCode = $orderInfos['discountCode'];
+            if ($discountCode) {
+                $discount = Discount::where('code', $discountCode)->first();
+                $oldUsed_by = $discount->used_by;
+
+                if (Arr::has($oldUsed_by, $userId)) {
+                    $newUsed_by = Arr::set($oldUsed_by, $userId, $oldUsed_by[$userId] + 1);
+                } else {
+                    $newUsed_by = Arr::add($oldUsed_by, $userId, 1);
+                }
+                $discount->used_by = $newUsed_by;
+                $discount->quantity -= 1;
+                $discount->save();
+            }
+            //// End change Discount count
+
             //// clear orderInfos in session
             Session::forget('orderInfos');
             //// end clear orderInfos in session
-
-            //// Send email to customer
-            // $data = [
-            //     'name' => $orderInfos->orderName,
-            //     'order_id' => $orderInfos->order_id,
-            //     'itemsList' => $cartItems,
-            //     'totalCost' => $orderInfos->totalCost,
-            //     'finalPrice' => $orderInfos->finalPrice,
-            // ];
-            // // dd($data);
-            // Http::post(route('send.email'), $data);
-            //// End send email to customer
 
             return redirect()->route('user.shop')->with('success', 'Thank you for your order !');
         } else {

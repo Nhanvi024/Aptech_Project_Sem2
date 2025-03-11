@@ -8,10 +8,9 @@
 		<div class="container container-tight py-4">
 			<div class="text-center my-5">
 				<a href="." class="navbar-brand navbar-brand-autodark">
-					<img src="/assets/img/logo.png" style="scale: 2" width="" height="" alt="Tabler"
+					<img src="/assets/img/logo.png" style="scale: 2" width="" height="" alt="Fruitkha"
 						class="navbar-brand-image">
 				</a>
-				{{-- @dd($data) --}}
 			</div>
 			<x-form-alert />
 
@@ -44,5 +43,4 @@
 			</form>
 		</div>
 	</div>
-
 @endsection

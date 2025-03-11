@@ -92,10 +92,12 @@
 						<a class="btn cart-btn border-0 mt-3 bg-primary" href="{{ route("user.shop") }}">back to shop</a>
 					</div>
 				</div>
-				<div class="col-8" style="white-space: pre-wrap">
-					<h3 class="mb-0">Product description:</h3>
-					<hr>
-					{{ $product->proDescription }}
+				<div class="col-8">
+					<h3 class="mt-5 mb-0">Product description:</h3>
+					<hr class="mb-0">
+					<div class="mt-0" style="white-space: pre-wrap">
+						{{ $product->proDescription }}
+					</div>
 					<hr>
 				</div>
 				<hr>

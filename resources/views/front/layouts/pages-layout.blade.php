@@ -36,8 +36,8 @@
 	<!-- responsive -->
 	<link rel="stylesheet" href="/assets/css/responsive.css">
 
-	<script src="https://www.paypal.com/sdk/js?client-id={{ config("paypal.client_id") }}&currency=USD&intent=capture">
-	</script>
+	{{-- <script src="https://www.paypal.com/sdk/js?client-id={{ config("paypal.client_id") }}&currency=USD&intent=capture">
+	</script> --}}
 
 </head>
 
