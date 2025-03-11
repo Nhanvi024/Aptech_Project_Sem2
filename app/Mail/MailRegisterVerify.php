@@ -24,7 +24,7 @@ class MailRegisterVerify extends Mailable
     }
     public function build()
     {
-        return $this->subject('Email Verifying')
+        return $this->subject('Fruitkha email Verifying')
             ->view('back.Mails.MailRegisterVerify');
     }
 }

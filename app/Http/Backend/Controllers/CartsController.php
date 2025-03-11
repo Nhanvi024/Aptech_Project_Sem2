@@ -68,9 +68,9 @@ class CartsController extends Controller
             if (Arr::has($listOld, $product->id) && $listOld[$product->id] > 1) {
                 Arr::set($listOld, $product->id, $listOld[$product->id] - 1);
             }
-            // else {
-            //     Arr::forget($listOld, $product->id);
-            // }
+            else {
+                Arr::forget($listOld, $product->id);
+            }
             $cart->itemsList = $listOld;
             $cart->save();
         }
@@ -81,9 +81,9 @@ class CartsController extends Controller
                 if (Arr::has($listOld, $product->id) && $listOld[$product->id] > 1) {
                     Arr::set($listOld, $product->id, $listOld[$product->id] - 1);
                 }
-                // else {
-                //     Arr::forget($listOld, $product->id);
-                // }
+                else {
+                    Arr::forget($listOld, $product->id);
+                }
                 Cookie::queue('cart', serialize($listOld), 43200);
             }
         }

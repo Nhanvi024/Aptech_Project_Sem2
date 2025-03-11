@@ -108,14 +108,13 @@
 						<div class="row">
 							@foreach ($product->proImageURL as $image)
 								<div class="col-2 text-center d-flex flex-column border mx-auto">
-									<img class="mx-auto" src="{{ asset("storage/products/" . $image) }}" alt="{{ $image }}" width="150px"
-										height="150px">
+									<img class="mx-auto my-3" src="{{ asset("storage/products/" . $image) }}" alt="{{ $image }}"
+										width="150px" height="150px">
 									<button proId={{ $product->id }} value={{ $image }}
 										class="btn rounded bg-secondary-lt text-black mt-1 mx-auto
                                 btnImageRemove">Remove</button>
-
 									<button proId={{ $product->id }} value={{ $image }}
-										class="btn rounded bg-primary-subtle mt-1 mx-auto btnImageSetMain">Set
+										class="btn rounded bg-primary-subtle mt-1 mx-auto btnImageSetMain mb-3">Set
 										main</button>
 								</div>
 							@endforeach
@@ -127,9 +126,12 @@
 							<input class="form-control" multiple type="file" name="image[]" id="">
 						</div>
 					@endif
+					@error("image")
+						<span class="text-danger">*** {{ $message }} </span>
+					@enderror
 					<div class="">
 						<label for="">Description: </label>
-						<textarea class="form-control" name="proDescription" id="" rows="4" placeholder="Enter description">{{ old("proDescription", $product->proDescription) }}</textarea>
+						<textarea class="form-control" name="proDescription" id="" rows="10" placeholder="Enter description">{{ old("proDescription", $product->proDescription) }}</textarea>
 						@error("proDescription")
 							<span class="text-danger">*** {{ $message }} </span>
 						@enderror
@@ -148,48 +150,6 @@
 				</form>
 			</div>
 		</div>
-		<footer class="footer footer-transparent d-print-none bg-secondary-subtle">
-			<div class="container-xl">
-				<div class="row text-center align-items-center flex-row-reverse">
-					<div class="col-lg-auto ms-lg-auto">
-						<ul class="list-inline list-inline-dots mb-0">
-							<li class="list-inline-item"><a href="https://tabler.io/docs" target="_blank" class="link-secondary"
-									rel="noopener">Documentation</a></li>
-							<li class="list-inline-item"><a href="./license.html" class="link-secondary">License</a></li>
-							<li class="list-inline-item"><a href="https://github.com/tabler/tabler" target="_blank" class="link-secondary"
-									rel="noopener">Source code</a></li>
-							<li class="list-inline-item">
-								<a href="https://github.com/sponsors/codecalm" target="_blank" class="link-secondary" rel="noopener">
-									<!-- Download SVG icon from http://tabler-icons.io/i/heart -->
-									<svg xmlns="http://www.w3.org/2000/svg" class="icon text-pink icon-filled icon-inline" width="24"
-										height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-										stroke-linecap="round" stroke-linejoin="round">
-										<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-										<path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572">
-										</path>
-									</svg>
-									Sponsor
-								</a>
-							</li>
-						</ul>
-					</div>
-					<div class="col-12 col-lg-auto mt-3 mt-lg-0">
-						<ul class="list-inline list-inline-dots mb-0">
-							<li class="list-inline-item">
-								Copyright © 2023
-								<a href="." class="link-secondary">Tabler</a>.
-								All rights reserved.
-							</li>
-							<li class="list-inline-item">
-								<a href="./changelog.html" class="link-secondary" rel="noopener">
-									v1.0.0-beta20
-								</a>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</footer>
 	</div>
 	<script>
 		$(document).ready(function() {

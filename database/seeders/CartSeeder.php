@@ -16,7 +16,27 @@ class CartSeeder extends Seeder
         //
         Cart::create([
             'userId' => 1,
-            'itemsList' => '{}',
+            'itemsList' => [],
+        ]);
+        Cart::create([
+            'userId' => 2,
+            'itemsList' => [],
+        ]);
+        Cart::create([
+            'userId' => 3,
+            'itemsList' => [],
+        ]);
+        Cart::create([
+            'userId' => 4,
+            'itemsList' => [],
+        ]);
+        Cart::create([
+            'userId' => 5,
+            'itemsList' => [],
+        ]);
+        Cart::create([
+            'userId' => 6,
+            'itemsList' => [],
         ]);
     }
 }

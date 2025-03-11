@@ -9,14 +9,14 @@
 			<div class="container-xl">
 				<div class="row g-2 align-items-center">
 					<div class="col">
-						<h2 class="page-title">
-							Admins
+						<h2 class="">
+							ADMINS MANAGEMENT
 						</h2>
 					</div>
 					<!-- Page title actions -->
 					<div class="col-auto ms-auto d-print-none">
 						<div class="d-flex">
-							<input type="search" class="form-control d-inline-block w-9 me-3" placeholder="Search …">
+							{{-- <input type="search" class="form-control d-inline-block w-9 me-3" placeholder="Search …"> --}}
 							@if (Auth::user()->role == "superAdmin")
 								<btn class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addAdminModal" id="textAJAX">
 									<!-- Download SVG icon from http://tabler-icons.io/i/plus -->
@@ -26,7 +26,7 @@
 										<path d="M12 5l0 14"></path>
 										<path d="M5 12l14 0"></path>
 									</svg>
-									New Admin
+									Add new Admin
 								</btn>
 							@endif
 						</div>
@@ -131,9 +131,6 @@
 		</div>
 		<!-- End Page body -->
 
-		<!-- Page foot -->
-		@include("back.layouts.inc.footer")
-		<!-- End Page foot -->
 	</div>
 
 	<script>

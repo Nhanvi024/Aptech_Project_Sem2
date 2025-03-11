@@ -24,7 +24,7 @@ class AdminController extends Controller
     {
         $data = [
             'pageTitle' => 'Order Manage',
-            'orders' => Order::orderBy('id', 'DESC')->get(),
+            'orders' => Order::orderBy('id', 'DESC')->paginate(15),
         ];
         return view('back.pages.dasboard.admin.order-manage', $data);
     }

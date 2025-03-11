@@ -23,13 +23,12 @@
 								<table class="cart-table">
 									<thead class="cart-table-head">
 										<tr class="table-head-row">
-											<th class="product-remove"></th>
+											<th class="product-remove" style="width: 50px"></th>
 											<th class="product-image">Product Image</th>
 											<th class="product-name">Name</th>
 											<th class="product-price">Price</th>
-											<th class="product-quantity">
+											<th class="product-quantity" style="width: 180px">
 												<li style="list-style-type: none">Quantity</li>
-												<li style="list-style-type: none"><small>max: 11000</small></li>
 											</th>
 											<th class="product-stock">Stock</th>
 											<th class="product-total">Total</th>
@@ -50,24 +49,22 @@
 												<td class="product-name">{{ $item->proName }}</td>
 												{{-- <td class="product-price">${{ $item->proPrice }}</td> --}}
 												<td class="product-price">
-													<del class="text-secondary">{{ $item->proDiscount > 0 ? "$" . $item->proPrice : "" }}</del>
+													<small><del class="text-secondary">{{ $item->proDiscount > 0 ? "$" . $item->proPrice : "" }}</del></small>
 													${{ ($item->proPrice * (100 - $item->proDiscount)) / 100 }}
 												</td>
-												<td class="product-quantity">
-													<div class="btn-group cart-btn border-0" style="width: 70%">
-														<button
-															class="btn cart-btn border-0 col-3 text-center {{ $cart[$item->id] > 1 ? "buttonCartMinus" : "" }} {{ $cart[$item->id] == 1 ? "bg-secondary" : "" }} "
+												<td class="product-quantity text-center">
+													<div class="btn-group border-0">
+														<button style="width: 30px"
+															class="btn cart-btn border-0 text-center {{ $cart[$item->id] > 1 ? "buttonCartMinus" : "" }} {{ $cart[$item->id] == 1 ? "bg-secondary" : "" }} "
 															value={{ $item->id }}>
 															<i class="fas fa-solid fa-minus m-auto"></i>
 														</button>
-														<input class="text-center inputCartItemQuantity" style="width: 75px;background: #f2802363;border: none"
-															inputmode="numeric" type="text" placeholder="" value={{ $cart[$item->id] }}
-															data-productId={{ $item->id }} min="1">
-														{{-- <span class="mx-auto d-flex justify-content-center align-items-center my-0 py-0 col"
-													style="background: #f2802363">
-													{{ $cart[$item->id] }} </span> --}}
-														<button
-															class="btn cart-btn border-0 col-3 {{ $cart[$item->id] < $item->proStock ? "buttonAddToCart" : "" }} {{ $cart[$item->id] == $item->proStock ? "bg-secondary" : "" }} "
+														<input class="text-center inputCartItemQuantity" style="width: 60px;background: #f2802363;border: none"
+															inputmode="numeric" type="text" placeholder=""
+															value={{ $cart[$item->id] >= $item->proStock ? $item->proStock : $cart[$item->id] }}
+															data-productId={{ $item->id }} min="1" max="99999">
+														<button style="width: 30px"
+															class="btn cart-btn border-0 {{ $cart[$item->id] < $item->proStock ? "buttonAddToCart" : "" }} {{ $cart[$item->id] >= $item->proStock ? "bg-secondary" : "" }} "
 															value={{ $item->id }}>
 															<i class="fas fa-solid fa-plus m-auto"></i>
 														</button>
@@ -77,7 +74,8 @@
 													{{ number_format($item->proStock, 0) }}
 												</td>
 												<td class="product-total">
-													{{ (($item->proPrice * (100 - $item->proDiscount)) / 100) * (float) $cart[$item->id] }}</td>
+													$ {{ number_format((($item->proPrice * (100 - $item->proDiscount)) / 100) * (float) $cart[$item->id], 2) }}
+												</td>
 											</tr>
 											{{-- plus price to totalValue --}}
 											<?php $totalValue += (($item->proPrice * (100 - $item->proDiscount)) / 100) * (float) $cart[$item->id];
@@ -101,14 +99,14 @@
 								<table class="total-table">
 									<thead class="total-table-head">
 										<tr class="table-total-row">
-											<th>Total</th>
+											<th></th>
 											<th>Price</th>
 										</tr>
 									</thead>
 									<tbody>
 										<tr class="total-data">
-											<td><strong>Total: </strong></td>
-											<td>${{ $totalValue }}</td>
+											<td><strong>Subtotal: </strong></td>
+											<td>$ {{ number_format($totalValue, 2) }}</td>
 										</tr>
 									</tbody>
 								</table>

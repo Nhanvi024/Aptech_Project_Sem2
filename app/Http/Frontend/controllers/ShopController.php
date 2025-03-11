@@ -19,9 +19,10 @@ class ShopController extends Controller
     {
         //// force user logout
         if ((Session::has('user'))) {
-            if (Cookie::get('token_login') != Auth::user()->token_login) {
+            if (Cookie::get('token_login') !== Auth::user()->token_login) {
                 Session::forget('user');
                 Cookie::queue(Cookie::forget('token_login'));
+                // Session::flash('sessionExpired', 'Your login session has expired, please log in again.');
                 return redirect()->route('user.user.logout')->with('sessionExpired', 'Your login session has expired, please log in again.');
             }
             if (!Cookie::has('token_login')) {
@@ -112,7 +113,7 @@ class ShopController extends Controller
         };
         $product = Product::where('id', $id)->with('category')->first();
         if ($product == null) {
-            return redirect()->route('shop.index')->with('fail', 'Product not found');
+            return redirect()->route('user.shop')->with('fail', 'Product not found');
         }
         $user = null;
         $cartItems = [];

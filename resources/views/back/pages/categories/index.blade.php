@@ -8,15 +8,14 @@
 			<div class="container-xl">
 				<div class="row g-2">
 					<div class="col">
-						<h1 class="">
+						<h2 class="">
 							CATEGORIES MANAGEMENT
-						</h1>
+						</h2>
 					</div>
 					<!-- Page title actions -->
 					<div class="col-auto">
 						<div class="d-flex">
 							<a href="{{ route("admin.products.create") }}" class="btn btn-primary">
-								<!-- Download SVG icon from http://tabler-icons.io/i/plus -->
 								<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
 									stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
 									<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -51,9 +50,9 @@
 									<td>{{ $item->catName }}</td>
 									<td>
 										@if ($item->catStatus == 1)
-											<span class="badge bg-success">Active</span>
+											<span class="badge bg-success text-white">Active</span>
 										@else
-											<span class="badge bg-danger">Inactive</span>
+											<span class="badge bg-danger text-white">Inactive</span>
 										@endif
 									</td>
 									<td class="text-end">
@@ -67,8 +66,5 @@
 		<!-- End Page body -->
 
 
-		<!-- Page foot -->
-		@include("back.layouts.inc.footer")
-		<!-- End Page foot -->
 	</div>
 @endsection

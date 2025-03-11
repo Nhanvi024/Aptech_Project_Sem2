@@ -5,6 +5,7 @@ use App\Http\Backend\Controllers\AuthController;
 use App\Http\Backend\Controllers\CartsController;
 use App\Http\Backend\Controllers\CategoriesController;
 use App\http\Backend\Controllers\CheckOutController;
+use App\Http\Backend\Controllers\OrderController;
 use App\Http\Backend\Controllers\UserController;
 use App\Http\Backend\Controllers\ProductsController;
 use App\Http\Backend\Controllers\PayPalController;
@@ -12,6 +13,10 @@ use App\Http\Frontend\controllers\CartController;
 use App\Http\Frontend\controllers\ShopController;
 use Illuminate\Container\Attributes\Auth;
 use Illuminate\Support\Facades\Route;
+
+use App\Http\Backend\Controllers\AboutUsController;
+use App\Http\Backend\Controllers\DiscountController;
+use App\Http\Frontend\controllers\ContactController;
 
 /**
  * Admin Routes
@@ -47,9 +52,26 @@ Route::prefix('admin')->name('admin.')->group(function () {
             route::post('/deactiveUser', 'userTableActions')->name('users.userTableActions');
             route::get('/resetfilter', 'resetFilter')->name('users.resetFilter');
         });
+
+        Route::controller(DiscountController::class)->group(function () {
+            Route::get('/discount/index', 'index')->name('discount.index');
+            Route::get('/discount/create', 'create')->name('discount.create');
+            Route::post('/discount/create', 'store')->name('discount.store');
+            Route::get('/discount/update/{id}', 'update')->name('discount.update');
+        });
+
+        Route::controller(ContactController::class)->group(function () {
+            Route::get('/contact/index1', 'index1')->name('contact.index1');
+            Route::get('/contact/{id}', 'detail')->name('contact.detail');
+            Route::get('/contact/reply/{id}', 'reply')->name('contact.reply');
+            Route::post('/contact/sendEmail/{contacts}',  "sendEmail")->name("contact.sendEmail");
+        });
+
         Route::resource('/products', ProductsController::class);
         Route::resource('/categories', CategoriesController::class);
         Route::get('/logout', [AuthController::class, 'adminLogout'])->name('admin.logout');
+        Route::get('/orderDetails/{id}', [OrderController::class, 'orderDetails'])->name('order.orderDetails');
+        Route::post('/orderDetails', [OrderController::class, 'updateStatus'])->name('order.updateStatus');
     });
 });
 
@@ -79,6 +101,8 @@ Route::name('user.')->group(function () {
             Route::get('/logout', [AuthController::class, 'userLogout'])->name('user.logout');
             Route::get('/profile', 'profile')->name('user.profile');
             Route::put('/profile', 'updateProfile')->name('user.profileUpdate');
+            Route::get('/profile/updatePassword', 'profileUpdatePassword')->name('user.profileUpdatePassword');
+            Route::post('/profile/updatePassword', 'profileUpdatePasswordPost')->name('user.profileUpdatePasswordPost');
         });
         Route::get('/logout', [AuthController::class, 'userLogout'])->name('user.logout');
     });
@@ -100,4 +124,13 @@ Route::name('user.')->group(function () {
     route::get('/paypal/success', [PayPalController::class, 'paymentSuccess'])->name('success');
     route::get('/paypal/cancel', [PayPalController::class, 'paymentCancel'])->name('cancel');
     // End paypal
+
+    Route::controller(AboutUsController::class)->group(function () {
+        Route::get('/about_us',  'index')->name('about.index');
+    });
+    Route::controller(ContactController::class)->group(function () {
+        Route::get('/contact',  'index')->name('contact.index');
+        Route::get('/contact/create', 'create')->name('contact.create');
+        Route::post('/contact/create', 'store')->name('contact.store');
+    });
 });

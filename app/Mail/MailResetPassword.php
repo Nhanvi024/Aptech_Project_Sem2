@@ -27,7 +27,7 @@ class MailResetPassword extends Mailable
      */
     public function build()
     {
-        return $this->subject('Reset Password')
+        return $this->subject('Fruitkha reset Password')
             ->view('back.Mails.MailResetPassword');
     }
 }

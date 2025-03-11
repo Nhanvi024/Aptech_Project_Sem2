@@ -8,10 +8,9 @@
 		<div class="container container-tight py-4">
 			<div class="text-center my-5">
 				<a href="." class="navbar-brand navbar-brand-autodark">
-					<img src="/assets/img/logo.png" style="scale: 2" width="" height="" alt="Tabler"
+					<img src="/assets/img/logo.png" style="scale: 2" width="" height="" alt="Fruitkha"
 						class="navbar-brand-image">
 				</a>
-				{{-- @dd($data) --}}
 			</div>
 			<x-form-alert />
 
@@ -19,9 +18,9 @@
 				autocomplete="off">
 				@csrf
 				<div class="card-body">
-					<input type="text" name="token_login" id="" value={{ $token_login }}>
-					<input type="text" name="token_password" id="" value={{ $token_password }}>
-					<input type="text" name="email" id="" value={{ $email }}>
+					<input type="hidden" name="token_login" id="" value={{ $token_login }}>
+					<input type="hidden" name="token_password" id="" value={{ $token_password }}>
+					<input type="hidden" name="email" id="" value={{ $email }}>
 					<h2 class="card-title text-center mb-4">Reset password</h2>
 					<div class="form-group">
 						<label for="password"><span class="text-danger">*</span>Password</label>
@@ -44,5 +43,4 @@
 			</form>
 		</div>
 	</div>
-
 @endsection

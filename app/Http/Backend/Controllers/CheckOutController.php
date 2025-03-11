@@ -5,6 +5,7 @@ namespace App\http\Backend\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Category;
+use App\Models\Discount;
 use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -17,28 +18,7 @@ class CheckOutController extends Controller
     //
     public function index()
     {
-
-        //// *** PHÚ LẤY DISCOUNT VÔ ĐÂY NHA ***
-        //
-        // $discounts = Discount::where('status', 1)->where('expires_at', ' >', now())->get();
-        //  $name
-        // $code
-        // $type
-        // $discount_value
-        // $condition
-        // $discountUse = DiscountUse::where('user_id',Auth::id())->get();
-        //// *** PHÚ LẤY DISCOUNT VÔ ĐÂY NHA ***
-
-
-
         //// force user logout
-        // if (Cookie::get('token_login') && Session::has('user')) {
-        //     if (Cookie::get('token_login') != Auth::user()->token_login) {
-        //         Session::forget('user');
-        //         Cookie::queue(Cookie::forget('token_login'));
-        //         return redirect()->route('user.user.logout')->with('fail', 'Your login session has expired, please log in again.');
-        //     }
-        // }
         if ((Session::has('user'))) {
             if (Cookie::get('token_login') != Auth::user()->token_login) {
                 Session::forget('user');
@@ -51,6 +31,10 @@ class CheckOutController extends Controller
             }
         }
         //// End force user logout
+
+        //// get all available discounts
+        $discounts = Discount::where('status', 1)->whereTodayOrBefore('starts_at')->whereTodayOrAfter('expires_at')->get();
+        //// end get all available discounts
 
         //// innit header data
         if (!Cookie::has('cart')) {
@@ -76,6 +60,7 @@ class CheckOutController extends Controller
             'user' => $user,
             'cart' => $dataCart,
             'discountAmount' => $discountAmount,
+            'discounts' => $discounts
         ];
         if (Cookie::get('cart') && !Session::has('user')) {
             // dd(unserialize(Cookie::get('cart')));
@@ -154,8 +139,6 @@ class CheckOutController extends Controller
 
     public function checkoutPost(Request $request)
     {
-        // dd($request->all());
-
         //// get cart and cartItems
         $cartItems = [];
         $dataCart = null;
@@ -190,6 +173,7 @@ class CheckOutController extends Controller
             'shippingName' => 'required|string|min:3|max:255',
             'shippingPhone' => 'required|string|min:10|max:16',
             'shippingAddress' => 'required|string',
+            'note' => 'string|min:3|max:10000',
         ]);
 
         //// get userId if user logged in, $userId = null if user not logged in
@@ -213,13 +197,6 @@ class CheckOutController extends Controller
         // dd('toi day r');
 
         //// force user logout
-        // if (Cookie::get('token_login') && Session::has('user')) {
-        //     if (Cookie::get('token_login') != Auth::user()->token_login) {
-        //         Session::forget('user');
-        //         Cookie::queue(Cookie::forget('token_login'));
-        //         return redirect()->route('user.user.logout')->with('fail', 'Your login session has expired, please log in again.');
-        //     }
-        // }
         if ((Session::has('user'))) {
             if (Cookie::get('token_login') != Auth::user()->token_login) {
                 Session::forget('user');

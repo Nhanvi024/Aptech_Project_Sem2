@@ -8,8 +8,7 @@
 				enctype="multipart/form-data">
 				@csrf
 				<div class="">
-					<label for="">id: </label>
-					<input class="form-control" type="text" name="id" placeholder="Enter id" value="{{ $admin->id }}">
+					<input class="form-control" type="hidden" name="id" placeholder="Enter id" value="{{ $admin->id }}">
 					<span id="id" class="text-danger initError"></span>
 				</div>
 				<div class="">
@@ -35,9 +34,6 @@
 				<button type="submit" class="btn btn-primary" style="width: fit-content">Save</button>
 			</form>
 		</div>
-		<!-- Page foot -->
-		@include("back.layouts.inc.footer")
-		<!-- End Page foot -->
 	</div>
 	<script>
 		$(document).ready(function() {

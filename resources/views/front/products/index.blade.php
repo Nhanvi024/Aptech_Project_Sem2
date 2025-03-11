@@ -19,7 +19,7 @@
 				<div class="col-lg-8 offset-lg-2 text-center">
 					<div class="breadcrumb-text">
 						<p>Fresh and Organic</p>
-						<h1>Shop</h1>
+						<h1>Fruitkha</h1>
 					</div>
 				</div>
 			</div>
@@ -30,22 +30,21 @@
 		<div class="container">
 			<x-form-alert />
 			<div class="row">
-
-				<div class="d-none d-xl-inline col-xl-3">
+				<div class="d-xl-inline col-xl-3">
 					<h4 class="strong">Products Filter</h4>
 					<button class="cart-btn border-0 mb-3 buttonHomeApplyFilter">Apply Filter</button>
 					<button class="cart-btn border-0 mb-3 buttonHomeResetFilter">Reset Filter</button>
 					<form action="" method="GET" id="formFilter">
 						<div class="input-group mb-3">
 							<input type="text" class="form-control" placeholder="Search by name..." aria-label="Search" name="nameFil"
-								aria-describedby="basic-addon2" value={{ request()->nameFil ?: "" }}>
-							<div class="input-group-append">
+								aria-describedby="basic-addon2" value="{{ request()->nameFil ?: "" }}">
+							{{-- <div class="input-group-append">
 								<button class="btn btn-outline-secondary" type="button">Search</button>
-							</div>
+							</div> --}}
 						</div>
 						<div class="filter-price">
 							<label class="h4 strong" for="priceRange">Price range:</label>
-							<div class=" d-flex justify-content-center align-items-baseline">
+							<div class=" d-flex align-items-baseline">
 								<label class="" for="priceFrom">From </label>
 								<input class="form-control" style="50px" type="number" id="priceFrom" name="priceFrom" min="0"
 									max="10000" value={{ request()->priceFrom ?: 0 }}>
@@ -58,14 +57,16 @@
 							<label class="h4 strong" for="category">Category:</label>
 							<div class="form-check">
 								<input type="checkbox" class="btnAllCate" id="cate0" name="categoryFil[]" value="0" />
-								<label for="cate0">All category</label>
+								<label for="cate0">All categories</label>
 							</div>
 							{{-- @dd([request()->categoryFil]) --}}
 							@foreach ($categories as $item)
 								<div class="form-check">
-									<input type="checkbox" class="cateCheck" name="categoryFil[]" value="{{ $item->id }}" id=""
-										{{ in_array($item->id, [request()->categoryFil][0] ?: []) ? "checked" : "" }}>
-									{{ $item->catName }}
+									<input type="checkbox" class="cateCheck" name="categoryFil[]" value="{{ $item->id }}"
+										id="{{ $item->catName }}" {{ in_array($item->id, [request()->categoryFil][0] ?: []) ? "checked" : "" }}>
+									<label for="{{ $item->catName }}">
+										{{ $item->catName }}
+									</label>
 								</div>
 							@endforeach
 						</div>
@@ -85,13 +86,14 @@
 											<img src={{ asset("storage/products/" . $item->proImageURL[0]) }} alt="" style="aspect-ratio: 1/1;">
 										</a>
 									</div>
-									<h3 style="width: 80%; margin: auto;height: 50px;text-overflow:ellipsis; overflow: hidden;white-space: nowrap;">
+									{{-- <h3 style="width: 80%; margin: auto;height: 50px;text-overflow:ellipsis; overflow: hidden;white-space: nowrap;"> --}}
+									<h3 style="width: 80%; margin: auto;height: 100px;">
 										{{ $item->proName }}</h3>
-									<p class="product-price">
-										<span>Per Kg</span>
-										<del class=" h6 text-secondary text-sm">{{ $item->proDiscount > 0 ? "$" . $item->proPrice : "" }}</del>
-										${{ ($item->proPrice * (100 - $item->proDiscount)) / 100 }}
-									</p>
+									<span class="product-price text-danger">
+										<del class="h6 text-secondary text-sm">{{ $item->proDiscount > 0 ? "$" . $item->proPrice : " " }}</del>
+										$<strong
+											class="h4 text-danger">{{ number_format(($item->proPrice * (100 - $item->proDiscount)) / 100, 2) }}</strong><small
+											class="text-dark d-none"> Per Kg</small></span>
 
 									<p class="product-stock">
 										Stock: {{ number_format($item->proStock, 0) }}
@@ -118,6 +120,7 @@
 							</div>
 						@endforeach
 					</div>
+
 					<!-- Pagination -->
 					<div class="row">
 						<div class="col-lg-12 text-center">
@@ -152,8 +155,10 @@
 								</ul>
 							</div>
 						</div>
-						{{-- {{ $products->appends(request()->except("page"))->links() }} --}}
 					</div>
+					<!-- End Pagination -->
+
+
 				</div>
 			</div>
 
@@ -166,18 +171,18 @@
 	<script>
 		$(document).ready(function() {
 
-			function fecthData() {
-				$.ajax({
-					url: '/',
-					type: 'GET',
-					dataType: 'json',
-					success: function(response) {
-						console.log('chay function fetchData');
-						console.log(response);
-					}
-				})
-				console.log('chay function fetchData');
-			}
+			// function fecthData() {
+			// 	$.ajax({
+			// 		url: '/',
+			// 		type: 'GET',
+			// 		dataType: 'json',
+			// 		success: function(response) {
+			// 			console.log('chay function fetchData');
+			// 			console.log(response);
+			// 		}
+			// 	})
+			// 	console.log('chay function fetchData');
+			// }
 
 			$('.buttonAddToCart').on('click', function(e) {
 				// e.preventDefault(); // Prevent form submission

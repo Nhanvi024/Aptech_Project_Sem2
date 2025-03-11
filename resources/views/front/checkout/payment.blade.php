@@ -193,7 +193,7 @@
 				<div class="col-12">
 					<form action="{{ route("user.paypal") }}" method="post">
 						@csrf
-						<div class="row">
+						<div class="row d-none">
 							<div class="col-lg-12">
 								<div class="order-details-wrap">
 									<div class="">
@@ -234,7 +234,7 @@
 									</div>
 									<div class="">
 										<label for="">note</label>
-										<input class="form-control" type="text" id="note" name="note" value="{{ $note }}">
+										<textarea name="note" id="note">{{ $note }}</textarea>
 									</div>
 									<div class="">
 										<label for="">Base subtotal</label>
@@ -265,7 +265,16 @@
 								</div>
 							</div>
 						</div>
-						<button type="submit">Paypal 2</button>
+						<div class="text-center">
+							<button type="submit" class="paypal-button">
+								<span class="paypal-button-title">
+									Buy now with
+								</span>
+								<span class="paypal-logo">
+									<i>Pay</i><i>Pal</i>
+								</span>
+							</button>
+						</div>
 					</form>
 				</div>
 			</div>

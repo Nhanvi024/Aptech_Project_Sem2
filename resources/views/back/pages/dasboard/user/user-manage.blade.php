@@ -12,22 +12,6 @@
 							USERS MANAGEMENT
 						</h2>
 					</div>
-					<!-- Page title actions -->
-					<div class="col-auto ms-auto d-print-none">
-						<div class="d-flex">
-							<input type="search" class="form-control d-inline-block w-9 me-3" placeholder="Search …">
-							<a href="#" class="btn btn-primary">
-								<!-- Download SVG icon from http://tabler-icons.io/i/plus -->
-								<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
-									stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-									<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-									<path d="M12 5l0 14"></path>
-									<path d="M5 12l14 0"></path>
-								</svg>
-								New Admin
-							</a>
-						</div>
-					</div>
 				</div>
 			</div>
 		</div>
@@ -70,18 +54,17 @@
 					</form>
 				</div> --}}
 				<div class="table-responsive" style="height: 65vh">
-
 					<table class="table table-striped">
 						<thead>
-							<tr>
-								<th>id</th>
-								<th>Username</th>
-								<th>Email</th>
-								<th>Gender</th>
-								<th>Phone</th>
-								<th>Address</th>
-								<th>Created_at</th>
-								<th>Blocked</th>
+							<tr class="bg-danger">
+								<th class="text-white bg-secondary">id</th>
+								<th class="text-white bg-secondary">Username</th>
+								<th class="text-white bg-secondary">Email</th>
+								<th class="text-white bg-secondary">Gender</th>
+								<th class="text-white bg-secondary">Phone</th>
+								<th class="text-white bg-secondary">Address</th>
+								<th class="text-white bg-secondary">Created_at</th>
+								<th class="text-white bg-secondary">Blocked</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -114,8 +97,6 @@
 			</div>
 		</div>
 
-		<!-- Page foot -->
-		@include("back.layouts.inc.footer")
-		<!-- End Page foot -->
+
 	</div>
 @endsection
