@@ -233,22 +233,13 @@
 						</div>
 						<div class="row mb-3">
 							<label class="form-label">Reply</label>
-							<textarea name="reply" class="form-control" id="contact-reply" contenteditable="false" cols="30"
-							 rows="6" readonly>
+							<textarea name="reply" class="form-control" id="contact-reply"cols="30" rows="6" readonly>
                         </textarea>
 						</div>
 					</div>
 					<div class="modal-footer">
-						<a href="#" class="btn btn-link link-secondary btn-3" data-bs-dismiss="modal">
-							Cancel
-						</a>
-						<a class="btn btn-primary" id="btn-reply">
-							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-								stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-2">
-								<path d="M12 5l0 14" />
-								<path d="M5 12l14 0" />
-							</svg>
-							Reply
+						<a href="#" class="btn btn-primary btn-3" data-bs-dismiss="modal">
+							Back
 						</a>
 					</div>
 				</div>
@@ -257,28 +248,28 @@
 		<script src="/back/dist/libs/tinymce/tinymce.min.js?1738096684" defer></script>
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 		<script>
-			$('#contactModal').on('shown.bs.modal', function() {
-				tinymce.init({
-					selector: '#contact-reply',
-					menubar: false,
-					statusbar: false,
-					plugins: [
-						'advlist autolink lists link image charmap preview anchor',
-						'searchreplace visualblocks code fullscreen',
-						'insertdatetime media table code help wordcount'
-					],
-					toolbar: 'undo redo | formatselect | ' +
-						'bold italic backcolor | alignleft aligncenter ' +
-						'alignright alignjustify | bullist numlist outdent indent | ' +
-						'removeformat',
-					height: 300,
-					setup: function(editor) {
-						editor.on('init', function() {
-							editor.setContent($('#contact-reply').val());
-						});
-					}
-				});
-			});
+			// $('#contactModal').on('shown.bs.modal', function() {
+			// 	tinymce.init({
+			// 		selector: '#contact-reply1',
+			// 		menubar: false,
+			// 		statusbar: false,
+			// 		plugins: [
+			// 			'advlist autolink lists link image charmap preview anchor',
+			// 			'searchreplace visualblocks code fullscreen',
+			// 			'insertdatetime media table code help wordcount'
+			// 		],
+			// 		toolbar: 'undo redo | formatselect | ' +
+			// 			'bold italic backcolor | alignleft aligncenter ' +
+			// 			'alignright alignjustify | bullist numlist outdent indent | ' +
+			// 			'removeformat',
+			// 		height: 300,
+			// 		setup: function(editor) {
+			// 			editor.on('init', function() {
+			// 				editor.setContent($('#contact-reply').val());
+			// 			});
+			// 		}
+			// 	});
+			// });
 
 			$('#contactModal').on('hidden.bs.modal', function() {
 				if (tinymce.get('contact-reply')) {
@@ -300,7 +291,7 @@
 						// if (tinymce.get('contact-reply')) {
 						//     tinymce.get('contact-reply').setContent(response.reply);
 						// }
-						$('#btn-reply').attr('href', "/admin/contact/reply/" + contactId);
+						// $('#btn-reply').attr('href', "/admin/contact/reply/" + contactId);
 
 						$('#contactModal').modal('show');
 					}

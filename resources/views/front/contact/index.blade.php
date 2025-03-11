@@ -34,7 +34,7 @@
 							<p class="alert alert-success">{{ Session::get("notice") }}</p>
 						@endif
 					</div>
-                    <br>
+					<br>
 					<form method="POST" action="{{ route("user.contact.store") }}" enctype="multipart/form-data">
 						@csrf
 						<div class="contact-form">
@@ -78,7 +78,7 @@
 											<select id="subject" name="subject" class="form-control">
 												<option value="">Choose subject</option>
 												@foreach ($subject as $key => $value)
-													<option value="{{ $value }}" {{$value==old('subject')?"selected ":""}}>{{ $value }}</option>
+													<option value="{{ $value }}" {{ $value == old("subject") ? "selected " : "" }}>{{ $value }}</option>
 												@endforeach
 											</select>
 										</p>
