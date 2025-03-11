@@ -23,7 +23,7 @@ class ContactFormMail extends Mailable
     }
 
     public function build() {
-        return $this->subject('Issue with Fruitkha')
+        return $this->subject('Fruitkha reply to contact')
                     ->view('front.contact.contactEmail')
                     ->with('data', $this->data);
 

@@ -129,9 +129,11 @@
 										data-id="{{ $contact->id }}">
 										Detail
 									</a>
-									<a class="btn btn-success" href="{{ route("admin.contact.reply", $contact->id) }}">
-										Reply
-									</a>
+									@if ($contact->status == 0)
+										<a class="btn btn-success" href="{{ route("admin.contact.reply", $contact->id) }}">
+											Reply
+										</a>
+									@endif
 								</td>
 							</tr>
 						@endforeach
