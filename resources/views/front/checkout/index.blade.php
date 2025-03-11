@@ -102,9 +102,11 @@
 															@enderror
 														</p>
 														<p>
-															<textarea class="form-control" name="note" id="note" cols="30" rows="10" placeholder="Order note"></textarea>
+															<textarea class="form-control" name="note" id="note" cols="30" rows="10" placeholder="Order note" maxlength="10000"></textarea>
 														</p>
-
+                                                        @error("note")
+                                                        <span class="text-danger">*** {{ $message }} </span>
+                                                    @enderror
 													</div>
 												</div>
 											</div>

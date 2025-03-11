@@ -14,6 +14,10 @@ use App\Http\Frontend\controllers\ShopController;
 use Illuminate\Container\Attributes\Auth;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Backend\Controllers\AboutUsController;
+use App\Http\Backend\Controllers\DiscountController;
+use App\Http\Frontend\controllers\ContactController;
+
 /**
  * Admin Routes
  */
@@ -48,6 +52,21 @@ Route::prefix('admin')->name('admin.')->group(function () {
             route::post('/deactiveUser', 'userTableActions')->name('users.userTableActions');
             route::get('/resetfilter', 'resetFilter')->name('users.resetFilter');
         });
+
+        Route::controller(DiscountController::class)->group(function () {
+            Route::get('/discount/index', 'index')->name('discount.index');
+            Route::get('/discount/create', 'create')->name('discount.create');
+            Route::post('/discount/create', 'store')->name('discount.store');
+            Route::get('/discount/update/{id}', 'update')->name('discount.update');
+        });
+
+        Route::controller(ContactController::class)->group(function () {
+            Route::get('/contact/index1', 'index1')->name('contact.index1');
+            Route::get('/contact/{id}', 'detail')->name('contact.detail');
+            Route::get('/contact/reply/{id}', 'reply')->name('contact.reply');
+            Route::post('/contact/sendEmail/{contacts}',  "sendEmail")->name("contact.sendEmail");
+        });
+
         Route::resource('/products', ProductsController::class);
         Route::resource('/categories', CategoriesController::class);
         Route::get('/logout', [AuthController::class, 'adminLogout'])->name('admin.logout');
@@ -105,4 +124,13 @@ Route::name('user.')->group(function () {
     route::get('/paypal/success', [PayPalController::class, 'paymentSuccess'])->name('success');
     route::get('/paypal/cancel', [PayPalController::class, 'paymentCancel'])->name('cancel');
     // End paypal
+
+    Route::controller(AboutUsController::class)->group(function () {
+        Route::get('/about_us',  'index')->name('about.index');
+    });
+    Route::controller(ContactController::class)->group(function () {
+        Route::get('/contact',  'index')->name('contact.index');
+        Route::get('/contact/create', 'create')->name('contact.create');
+        Route::post('/contact/create', 'store')->name('contact.store');
+    });
 });

@@ -50,8 +50,8 @@ class AdminSeeder extends Seeder
             'role' => 'admin',
         ]);
         Admin::create([
-            'username' => 'admin04',
-            'email' => 'admin04@example.com',
+            'username' => 'adminblock',
+            'email' => 'adminblock@example.com',
             'password' => bcrypt(159357),
             'role' => 'admin',
             'blocked' => 1,

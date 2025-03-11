@@ -121,7 +121,7 @@ class UserController extends Controller
             'address' => 'string|nullable|max:255',
             'phone' => [
                 'required',
-                'string',
+                'numeric',
                 'min:10',
                 'max:16',
                 Rule::unique('users', 'phone')->ignore($user->id),

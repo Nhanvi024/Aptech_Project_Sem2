@@ -46,7 +46,7 @@ class ProductsController extends Controller
         if (isset($request->seasonFil) && ($request->seasonFil != null)) {
             $query->where('proSeason', $request->seasonFil);
         }
-        $result = $query->with('category')->paginate(perPage: 15);
+        $result = $query->with('category')->paginate(perPage: 2);
         $data = [
             'pageTitle' => 'Products Manager',
             'products' => $result,

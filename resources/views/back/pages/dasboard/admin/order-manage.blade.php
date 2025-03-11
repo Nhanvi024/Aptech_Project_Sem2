@@ -70,6 +70,9 @@
 				<!-- Pagination -->
 				<div class="row">
 					<div class="col-lg-12 text-center">
+						<div class="mt-2">
+							Showing {{ $orders->firstItem() }} to {{ $orders->lastItem() }} of {{ $orders->total() }} results
+						</div>
 						<div class="pagination-wrap">
 							<ul>
 								@if ($orders->currentPage() > 1)
@@ -112,9 +115,7 @@
 								@endif
 							</ul>
 						</div>
-						<div class="mt-2">
-							Showing {{ $orders->firstItem() }} to {{ $orders->lastItem() }} of {{ $orders->total() }} results
-						</div>
+
 					</div>
 				</div>
 				<!-- End Pagination -->
