@@ -155,7 +155,7 @@ class AuthController extends Controller
             ],
             'dob' => 'bail|required|date|before:today',
             'phone' => 'bail|required|string|min:10|max:16|unique:users,phone',
-            'address' => "string|max:255",
+            'address' => "max:255",
         ]);
 
         //// if no address is provided
