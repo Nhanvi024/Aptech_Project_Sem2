@@ -246,6 +246,10 @@
 										@else
 											<a id="" class="boxed-btn">Place Order</a>
 										@endif
+                                        <div class="">
+											<a href="./cart" id="" class="boxed-btn bg-primary">Back to cart</a>
+										</div>
+
 									</div>
 									<div class="d-none">
 										<div class="">
