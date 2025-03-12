@@ -125,7 +125,7 @@
                                                     <p style="color: red; font-size: 14px">{{ $message }}</p>
                                                     @enderror --}}
 													</div>
-													<button type="button" class="btn btn-secondary mt-2 remove-image" onclick="removeImageField(this)">Delete
+													<button type="button" class="btn btn-secondary mt-2 remove-image d-none" onclick="removeImageField(this)">Delete
 														Image</button>
 												</div>
 											@endforeach
