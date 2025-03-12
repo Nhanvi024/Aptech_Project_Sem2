@@ -441,9 +441,9 @@
 			button.closest('.content-item').remove();
 		}
 
-		// function removeImageField(button) {
-		//     button.closest('.image-item').remove();
-		// }
+		function removeImageField(button) {
+		    button.closest('.image-item').remove();
+		}
 
 		function previewImage(event, id) {
 			const input = event.target.file[0];
