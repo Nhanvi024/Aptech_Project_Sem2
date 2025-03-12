@@ -161,9 +161,6 @@
 				if (password.match(/[0-9]/)) {
 					strength += 5;
 				}
-				if (!password.match(/[^a-zA-Z0-9]/)) {
-					strength = 0;
-				}
 				if (password.length < 8) {
 					strength = 0;
 				}
@@ -193,6 +190,17 @@
 			$('#passwordConfirm').on('input', function() {
 				var password = $('#passwordValue').val();
 				var confirmPassword = $(this).val();
+				if (password == confirmPassword) {
+					$('#passwordValue').addClass('bg-success');
+					$('#passwordConfirm').addClass('bg-success');
+				} else {
+					$('#passwordValue').removeClass('bg-success');
+					$('#passwordConfirm').removeClass('bg-success');
+				}
+			});
+            $('#passwordValue').on('input', function() {
+				var confirmPassword = $('#passwordConfirm').val();
+				var password = $(this).val();
 				if (password == confirmPassword) {
 					$('#passwordValue').addClass('bg-success');
 					$('#passwordConfirm').addClass('bg-success');
