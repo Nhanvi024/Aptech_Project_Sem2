@@ -20,7 +20,7 @@
 						<div class="form-group">
 							<label for="name"><span class="text-danger">*</span>Full name:</label>
 							<input type="text" maxlength="255" class="form-control" id="name" name="name"
-								value={{ old("name") }}>
+								value="{{ old("name") }}">
 							@error("name")
 								<span class="text-danger">*** {{ $message }} </span>
 							@enderror
