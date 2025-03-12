@@ -22,7 +22,7 @@
 							@method("put")
 							<div class="form-group">
 								<label for="name"><span class="text-danger">*</span>Name</label>
-								<input type="text" class="form-control" id="name" name="name"
+								<input type="text" maxlength="255" class="form-control" id="name" name="name"
 									value="{{ old("name", (string) $user->name) }}" disabled>
 								@error("name")
 									<span class="text-danger">*** {{ $message }} </span>
@@ -47,7 +47,7 @@
 							</div>
 							<div class="form-group">
 								<label for="address">Address</label>
-								<input type="text" class="form-control" id="address" disabled name="address"
+								<input type="text" maxlength="255" class="form-control" id="address" disabled name="address"
 									value="{{ old("address", $user->address) }}">
 								@error("address")
 									<span class="text-danger">*** {{ $message }} </span>
@@ -55,7 +55,7 @@
 							</div>
 							<div class="form-group">
 								<label for="phone"></span>Phone</label>
-								<input type="text" class="form-control" id="phone" disabled name="phone"
+								<input type="text" class="form-control" maxlength="16" id="phone" disabled name="phone"
 									value="{{ old("phone", $user->phone) }}">
 								@error("phone")
 									<span class="text-danger">*** {{ $message }} </span>
@@ -86,8 +86,14 @@
 	<script>
 		$(document).ready(function() {
 			// remove character from phone number
+			$('#name').on('input', function() {
+				$(this).val($(this).val().replace(/[^a-z ]/gi, ''));
+			});
 			$('#phone').on('input', function() {
 				$(this).val($(this).val().replace(/[^0-9]/g, ''));
+			});
+			$('#address').on('input', function() {
+				$(this).val($(this).val().replace(/[^a-z0-9#'.,-/ ]/gi, ''));
 			});
 			$('#buttonEditProfile').on('click', function() {
 				$('.form-btn').removeClass('d-none');

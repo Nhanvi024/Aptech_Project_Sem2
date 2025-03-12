@@ -89,15 +89,15 @@
 							@endif
 						</div>
 						<a class="btn cart-btn border-0 mt-3 bg-success" href="{{ route("user.user.cart.index") }}">View Cart</a>
-						<a class="btn cart-btn border-0 mt-3 bg-primary" href="{{ route("user.shop") }}">back to shop</a>
+						<a class="btn cart-btn border-0 mt-3 bg-primary" href="{{ route("user.shop") }}">Back to shop</a>
 					</div>
 				</div>
 				<div class="col-8">
 					<h3 class="mt-5 mb-0">Product description:</h3>
 					<hr class="mb-0">
-					<div class="mt-0" style="white-space: pre-wrap">
-						{{ $product->proDescription }}
-					</div>
+					<span class="mt-0 text-start" style="white-space: pre-wrap">
+						{{ Str::start($product->proDescription, "\n") }}
+					</span>
 					<hr>
 				</div>
 				<hr>

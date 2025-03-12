@@ -50,19 +50,20 @@
 										</svg>
 									</span>
 								</span> --}}
-								@error("password")
-									<span class="text-danger">{{ $message }}</span>
-								@enderror
 							</div>
+							@error("password")
+								<span class="text-danger">{{ $message }}</span>
+							@enderror
 							<div id="" class="form-check">
 								<input type="checkbox" class="form-check-input" id="buttonShowPassword">
-								<small class="form-check-label text-muted">Show or hide password</small>
+								<label for="buttonShowPassword"><small class="form-check-label text-muted">Show or hide password</small></label>
 							</div>
 						</div>
+                        <hr>
 						<div class="form-group">
 							<label class="form-check">
-								<input type="checkbox" class="form-check-input" name="rememberMe" />
-								<label class="form-check-label">Remember me on this device</label>
+								<input type="checkbox" class="form-check-input" name="rememberMe" id="rememberMe" />
+								<label for="rememberMe" class="form-check-label">Remember me on this device</label>
 							</label>
 						</div>
 						<div class="form-footer">

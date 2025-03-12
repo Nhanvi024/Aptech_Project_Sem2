@@ -71,20 +71,18 @@ class AuthController extends Controller
         $fieldType = filter_var($request->login_id, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
         if ($fieldType == 'email') {
             $request->validate([
-                'login_id' => 'required|email|exists:admins,email',
+                'login_id' => 'required|email|',
                 'password' => 'required',
             ], [
                 'login_id.required' => 'Enter your email or your username.',
                 'login_id.email' => 'Invalid email address.',
-                'login_id.exists' => 'Email or username does not exist.',
             ]);
         } else {
             $request->validate([
-                'login_id' => 'required|exists:admins,username',
+                'login_id' => 'required|',
                 'password' => 'required',
             ], [
                 'login_id.required' => 'Enter your email or your username.',
-                'login_id.exists' => 'Email or username does not exist.',
             ]);
         }
 
@@ -159,7 +157,6 @@ class AuthController extends Controller
             'phone' => 'bail|required|string|min:10|max:16|unique:users,phone',
             'address' => "string|max:255",
         ]);
-        // dd('toi day r');
 
         //// if no address is provided
         if ($request->address == null) {
@@ -168,13 +165,6 @@ class AuthController extends Controller
         $request['password'] = bcrypt($request['password']);
         $token_email = str::random(32);
         $request->merge(['token_login' => $token_email]); // add 'token_login' to request
-
-        // $cookieCart = unserialize(Cookie::get('cart'));
-        // if (!$cookieCart) {
-        //     // dd('ko co cart');
-        // } else {
-        //     // dd($cookieCart);
-        // }
 
         $newItemsList = [];
         if ($request['saveCart']) {
@@ -336,7 +326,6 @@ class AuthController extends Controller
             //// put $user to Session
             Session::put('user', $user);
 
-
             //// Redirect user to route shop if logged successfully
             return redirect()->route('user.shop')->with('success', 'You have successfully logged in.');
         } else {
@@ -347,10 +336,6 @@ class AuthController extends Controller
 
     public function userLogout()
     {
-        // if (Session::get("sessionExpired")) {
-        // }
-        // dd($data -> all());
-
         ////Get user from session
         $user = User::find(Auth::id());
         // dd($user);

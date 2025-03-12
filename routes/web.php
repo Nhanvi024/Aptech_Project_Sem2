@@ -27,7 +27,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::controller(AuthController::class)->group(function () {
             Route::get('/login', 'adminLoginForm')->name('admin.login');
             Route::post('/login', 'adminLoginHandle')->name('admin.login-handle');
-            Route::get('/forgot-password', 'adminForgotPasswordForm')->name('admin.forgot');
+            // Route::get('/forgot-password', 'adminForgotPasswordForm')->name('admin.forgot');
         });
     });
     Route::middleware('auth:admin')->group(function () {
@@ -73,9 +73,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/logout', [AuthController::class, 'adminLogout'])->name('admin.logout');
         Route::get('/orderDetails/{id}', [OrderController::class, 'orderDetails'])->name('order.orderDetails');
         Route::post('/orderDetails', [OrderController::class, 'updateStatus'])->name('order.updateStatus');
-    });
 
-    Route::middleware('auth:admin')->group(function () {
         Route::controller(PostController::class)->group(function () {
             Route::get('/post', 'allPost')->name('posts');
             Route::get('/post/new', 'addPost')->name('add.post');
@@ -86,8 +84,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::post('/post/change-visibility', 'changeVisibility')->name('change.visibility');
         });
     });
-});
 
+    Route::middleware('auth:admin')->group(function () {});
+
+    Route::middleware('auth:admin')->group(function () {
+        Route::fallback(function () {
+            return redirect()->route('admin.order.manage'); // Use named route here
+        });
+    });
+});
 /**
  * User Routes
  */
@@ -152,4 +157,12 @@ Route::name('user.')->group(function () {
     Route::get('/news/{id}', [PostController::class, 'singleNews'])->name('single.news');
     Route::get('/news/{tag}', [PostController::class, 'postsByTag'])->name('posts.byTag');
     // End news
+
+    // redirect home page if 404
+    // Route::middleware('web')->group(function () {
+    Route::fallback(function () {
+        return redirect()->back(); // Use named route here
+    });
+    // });
+
 });

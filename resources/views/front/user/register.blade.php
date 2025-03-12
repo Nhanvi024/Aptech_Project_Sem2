@@ -19,14 +19,15 @@
 						@csrf
 						<div class="form-group">
 							<label for="name"><span class="text-danger">*</span>Full name:</label>
-							<input type="text" class="form-control" id="name" name="name" value={{ old("name") }}>
+							<input type="text" maxlength="255" class="form-control" id="name" name="name"
+								value={{ old("name") }}>
 							@error("name")
 								<span class="text-danger">*** {{ $message }} </span>
 							@enderror
 						</div>
 
 						<div class="form-group">
-							<label for="">Gender:</label>
+							<label for="gender">Gender:</label>
 							<select class="form-control" id="gender" name="gender">
 								<option value=2>-- Select gender --</option>
 								<option value=0 {{ old("gender", 2) == 0 ? "selected" : "" }}>Male</option>
@@ -35,7 +36,7 @@
 							</select>
 						</div>
 						<div class="form-group">
-							<label for="dob"><span class="text-danger">*</span>Date of Birth:</label>
+							<label for=""><span class="text-danger">*</span>Date of Birth:</label>
 							<input type="date" class="form-control" id="dob" name="dob" value={{ old("dob") }}>
 							{{-- <span id="dob" class="text-danger initError"></span> --}}
 							@error("dob")
@@ -44,7 +45,7 @@
 						</div>
 						<div class="form-group">
 							<label for="username"><span class="text-danger">*</span>Username:</label>
-							<input type="text" class="form-control" id="username" autocomplete="on" name="username"
+							<input type="text" maxlength="255" class="form-control" id="username" autocomplete="on" name="username"
 								value={{ old("username") }}>
 							@error("username")
 								<span class="text-danger">*** {{ $message }} </span>
@@ -52,17 +53,17 @@
 						</div>
 						<div class="form-group">
 							<label for="email"><span class="text-danger">*</span>Email:</label>
-							<input type="email" class="form-control" id="email" name="email" autocomplete="on"
+							<input type="email" class="form-control" id="email" maxlength="255" name="email" autocomplete="on"
 								value={{ old("email") }}>
 							@error("email")
 								<span class="text-danger">*** {{ $message }} </span>
 							@enderror
 						</div>
 						<div class="form-group">
-							<label for=""><span class="text-danger">*</span>Password: </label>
+							<label for="passwordValue"><span class="text-danger">*</span>Password: </label>
 							<input id="passwordValue" class="form-control inpPassword" autocomplete="off" type="password" name="password"
 								placeholder="Enter password">
-							<label for=""><span class="text-danger">*</span>Confirm Password: </label>
+							<label for="passwordConfirm"><span class="text-danger">*</span>Confirm Password: </label>
 							<input id="passwordConfirm" class="form-control" autocomplete="off" type="password" name="password_confirmation"
 								placeholder="Confirm Password">
 							{{-- <span id="password" class="text-danger initError"></span> --}}
@@ -71,7 +72,7 @@
 							@enderror
 							<small id="passwordHelp" class="form-text text-muted">Password must be at least 8 characters long and contain at
 								least one uppercase letter, one lowercase letter, and one number.</small>
-							<div id="passwordMeter" class="progress w-50">
+							<div id="passwordMeter" class="progress w-75">
 								<div id="passwordProgressBar" class="progress-bar progress-bar-animated" role="progressbar" style="width: 0%"
 									aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
 							</div>
@@ -83,8 +84,9 @@
 						</div>
 						<div id="termAgreement" class="form-check">
 							<input type="checkbox" style="width: 15px;height: 15px;" class="form-check-input" name="termAgreement"
-								id="termAgreement" {{ old("termAgreement") ? "checked" : "" }}>
-							<label class="form-check-label" for="termAgreement"><span class="text-danger">* </span>I agree to the terms and
+								id="inpTermAgreement" {{ old("termAgreement") ? "checked" : "" }}>
+							<label class="form-check-label" for="inpTermAgreement"><span class="text-danger">* </span>I agree to the terms
+								and
 								conditions</label>
 							<div class="">
 								@error("termAgreement")
@@ -94,14 +96,16 @@
 						</div>
 						<div class="form-group">
 							<label for="address">Address:</label>
-							<input type="text" class="form-control" id="address" name="address" value={{ old("address") }}>
+							<input type="text" maxlength="255" class="form-control" id="address" name="address"
+								value={{ old("address", "") }}>
 							@error("address")
 								<span class="text-danger">*** {{ $message }} </span>
 							@enderror
 						</div>
 						<div class="form-group">
 							<label for="phone"><span class="text-danger">*</span>Phone:</label>
-							<input type="text" class="form-control" id="phone" name="phone" value={{ old("phone") }}>
+							<input type="text" maxlength="16" class="form-control" id="phone" name="phone"
+								value={{ old("phone") }}>
 							@error("phone")
 								<span class="text-danger">*** {{ $message }} </span>
 							@enderror
@@ -117,8 +121,8 @@
 								<div class="">We noticed you have a cart on your device.</div>
 								<div id="saveCart" class="form-check">
 									<input type="checkbox" style="width: 15px;height: 15px;" class="15orm-check-input" name="saveCart"
-										id="saveCart" {{ old("saveCart") ? "checked" : "" }}>
-									<label class="form-check-label" for="saveCart"><span class="text-danger"></span> Save cart to my new
+										id="inpSaveCart" {{ old("saveCart") ? "checked" : "" }}>
+									<label class="form-check-label" for="inpSaveCart"><span class="text-danger"></span> Save cart to my new
 										account.</label>
 								</div>
 							@endif
@@ -146,7 +150,7 @@
 				$('#passwordValue').val(password);
 				var strength = 0;
 				if (password.length >= 8) {
-					strength = password.length * 1.5;
+					strength = password.length * 4;
 				}
 				if (password.match(/[a-z]/)) {
 					strength += 5;
@@ -196,6 +200,15 @@
 					$('#passwordValue').removeClass('bg-success');
 					$('#passwordConfirm').removeClass('bg-success');
 				}
+			});
+			$('#username').on('input', function() {
+				$(this).val($(this).val().replace(/[^a-zA-Z0-9 ]/g, ''));
+			});
+			$('#name').on('input', function() {
+				$(this).val($(this).val().replace(/[^a-z ]/gi, ''));
+			});
+			$('#address').on('input', function() {
+				$(this).val($(this).val().replace(/[^a-z0-9#'.,-/ ]/gi, ''));
 			});
 		});
 	</script>

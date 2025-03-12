@@ -1,6 +1,6 @@
 @extends("front.layouts.pages-layout")
 @section("pageTitle")
-	Fruitkha lalala
+	Fruitkha
 @endsection
 @section("content")
 	<!-- breadcrumb-section -->

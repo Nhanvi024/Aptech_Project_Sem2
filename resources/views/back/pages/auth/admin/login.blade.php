@@ -6,7 +6,8 @@
 		<div class="container container-tight py-4">
 			<div class="text-center mb-4">
 				<a href="." class="navbar-brand navbar-brand-autodark">
-					<img src="/assets/img/logo.png" width="110" height="32" alt="lalala" class="navbar-brand-image">
+					<img src="/assets/img/logo.png" style="scale: 2" width="" height="" alt="Fruitkha" class="navbar-brand-image">
+					{{-- <img src="/assets/img/logo.png" width="110" height="32" alt="lalala" class="navbar-brand-image"> --}}
 				</a>
 			</div>
 
@@ -27,16 +28,13 @@
 						</div>
 						<div class="mb-2">
 							<label class="form-label">
-								Password
-								<span class="form-label-description">
-									<a href="{{ route("admin.admin.forgot") }}">I forgot password</a>
-								</span>
+								Password:
 							</label>
-							<div class="input-group input-group-flat">
-								<input type="password" class="form-control" placeholder="Your password" autocomplete="off" name="password"
-									value="{{ old("password") }}">
-								<span class="input-group-text">
-									<a href="#" class="link-secondary" title="Show password"
+							<div class="input-group form-group input-group-flat">
+								<input type="password" class="form-control" id="password" placeholder="Your password" autocomplete="off"
+									name="password" value="{{ old("password") }}">
+								<div class="input-group-text text-center" style="width: 50px">
+									<a href="#" class="link-secondary mx-auto" title="Show password" id="btnShowPassword"
 										data-bs-toggle="tooltip"><!-- Download SVG icon from http://tabler-icons.io/i/eye -->
 										<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
 											stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -45,17 +43,13 @@
 											<path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
 										</svg>
 									</a>
-								</span>
+								</div>
+							</div>
+							<div>
 								@error("password")
 									<span class="text-danger">{{ $message }}</span>
 								@enderror
 							</div>
-						</div>
-						<div class="mb-2">
-							<label class="form-check">
-								<input type="checkbox" class="form-check-input" />
-								<span class="form-check-label">Remember me on this device</span>
-							</label>
 						</div>
 						<div class="form-footer">
 							<button type="submit" class="btn btn-primary w-100">Sign in</button>
@@ -65,5 +59,16 @@
 			</div>
 		</div>
 	</div>
-
+	<script>
+		$(document).ready(function() {
+			$("#btnShowPassword").click(function() {
+				var input = $("#password");
+				if (input.attr("type") == "password") {
+					input.attr("type", "text");
+				} else {
+					input.attr("type", "password");
+				}
+			});
+		});
+	</script>
 @endsection

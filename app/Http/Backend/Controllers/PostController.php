@@ -334,7 +334,10 @@ class PostController extends Controller
 
     public function singleNews($id)
     {
-
+        $currentPost = Post::where('id', $id)->where('visibility', 1)->first();
+        if (!$currentPost) {
+            return redirect()->route('user.news')->with('fail', 'No post found!');
+        };
         //// force user logout
         if ((Session::has('user'))) {
             if (Cookie::get('token_login') !== Auth::user()->token_login) {
@@ -369,7 +372,8 @@ class PostController extends Controller
         $data = [
             'pageTitle' => 'Shop',
             'categories' => Category::all(),
-            'products' =>  Product::orderBy('created_at', 'desc')->take(5)->get(),
+            // 'products' =>  Product::orderBy('created_at', 'desc')->take(5)->get(),
+            'products' =>  Product::orderBy('created_at', 'desc')->limit(15)->inRandomOrder()->limit(6)->get(),
             'cartItems' => $cartItems,
             'user' => $user,
             'cart' => $dataCart,
@@ -386,23 +390,6 @@ class PostController extends Controller
             $data['cart'] = unserialize(Cookie::get('cart'));
         };
         //// End innit header data
-
-        // $products = Product::orderBy('created_at', 'desc')->take(5)->get(); // Lấy 5 sản phẩm mới nhất
-
-        // $currentPost = Post::where('id', $id)
-        //     ->where('visibility', 1)
-        //     ->firstOrFail();
-
-        // $recentPosts = Post::where('visibility', 1)
-        //     ->where('id', '!=', $id) // Tránh trùng bài viết hiện tại
-        //     ->orderBy('created_at', 'desc')
-        //     ->take(3)
-        //     ->get();
-        // $posts = Post::where('id', $id)->where('visibility', 1)->orderBy('created_at', 'desc')->take(5)->get();
-
-        // if (!$posts) {
-        //     abort(404); // Nếu không tìm thấy bài viết, trả về trang 404
-        // }
 
         return view('front.pages.post.single-post', $data);
     }

@@ -36,6 +36,9 @@ class ShopController extends Controller
         if ($request->priceFrom > $request->priceTo) {
             return back()->with('fail', 'price From must < price To');
         }
+        if ($request->priceFrom < 0 || $request->priceTo < 0) {
+            return back()->with('fail', 'prices must greater or equal than 0');
+        }
         $query = Product::query();
         if (isset($request->nameFil) && ($request->nameFil != null)) {
             $query->where('proName', 'like', '%' . $request->nameFil . '%');
@@ -54,7 +57,7 @@ class ShopController extends Controller
         if (isset($request->categoryFil) && ($request->categoryFil != 0)) {
             $query->whereIn('category_id', $request->categoryFil);
         }
-        $result = $query->where('proActive', 1)->with('category')->paginate(6);
+        $result = $query->where('proActive', 1)->where('proStock',  ">", 1)->with('category')->paginate(6);
         //// End filter products
 
         //// innit header data

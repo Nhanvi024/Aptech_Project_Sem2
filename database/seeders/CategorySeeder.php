@@ -13,31 +13,6 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        //
-        // Category::create([
-        //     'catName' => 'Pome',
-        // ]);
-        // Category::create([
-        //     'catName' => 'Drupe',
-        // ]);
-        // Category::create([
-        //     'catName' => 'Berry',
-        // ]);
-        // Category::create([
-        //     'catName' => 'Aggregate fruit',
-        // ]);
-        // Category::create([
-        //     'catName' => 'Legumes',
-        // ]);
-        // Category::create([
-        //     'catName' => 'Capsules',
-        // ]);
-        // Category::create([
-        //     'catName' => 'Nuts',
-        // ]);
-        // Category::create([
-        //     'catName' => 'Multiple fruits',
-        // ]);
         Category::create([
             'catName' => 'Vietnamese fruit',
         ]);

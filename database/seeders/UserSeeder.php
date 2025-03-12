@@ -43,10 +43,10 @@ class UserSeeder extends Seeder
             'email_verified_at' => now(),
         ]);
         User::create([
-            'name' => 'Name user03',
-            'username' => 'user03',
+            'name' => 'Name userEmail',
+            'username' => 'userEmail',
             'gender' => 2,
-            'email' => 'user03@gmail.com',
+            'email' => 'userEmail@gmail.com',
             'password' => bcrypt(159357),
             'dob' => '1992-08-25',
             'phone' => rand(1000000001,9999999999),
@@ -67,10 +67,10 @@ class UserSeeder extends Seeder
             'email_verified_at' => now(),
         ]);
         User::create([
-            'name' => 'Name user05',
-            'username' => 'user05',
+            'name' => 'Name userBlocked',
+            'username' => 'userBlocked',
             'gender' => 0,
-            'email' => 'user05@gmail.com',
+            'email' => 'userBlocked@gmail.com',
             'password' => bcrypt(159357),
             'dob' => '1997-06-10',
             'phone' => rand(1000000001,9999999999),

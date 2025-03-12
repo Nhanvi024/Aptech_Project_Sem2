@@ -32,6 +32,12 @@ class ProductsController extends Controller
                 case 4:
                     $query->orderBy('proActive', 'asc');
                     break;
+                case 5:
+                    $query->orderBy('id', 'desc');
+                    break;
+                case 6:
+                    $query->orderBy('id', 'asc');
+                    break;
                 default:
                     $query->orderBy('proId', 'asc');
                     break;
@@ -46,7 +52,7 @@ class ProductsController extends Controller
         if (isset($request->seasonFil) && ($request->seasonFil != null)) {
             $query->where('proSeason', $request->seasonFil);
         }
-        $result = $query->with('category')->paginate(perPage: 15);
+        $result = $query->with('category')->orderBy('id','desc')->paginate(perPage: 15);
         $data = [
             'pageTitle' => 'Products Manager',
             'products' => $result,
@@ -89,11 +95,11 @@ class ProductsController extends Controller
         //// validate infos
         $resulstAdd = $request->validate([
             'proName' => 'required|min:3|max:255|unique:products,proName',
-            'proCost' => 'required|numeric|min:0.01|max:1000000',
-            'proPrice' => 'required|numeric|min:0.01|max:1000000',
+            'proCost' => 'required|numeric|min:0.01|max:999999',
+            'proPrice' => 'required|numeric|min:0.01|max:999999',
             'proSeason' => 'required',
             'proOrigin' => 'required',
-            'proStock' => 'required|numeric|min:1|max:1000000',
+            'proStock' => 'required|numeric|min:1|max:999999',
             'proDiscount' => 'required|numeric|min:0|max:100',
             'category_id' => 'required',
             'image' => 'required|array',
@@ -149,14 +155,14 @@ class ProductsController extends Controller
                 'max:255',
                 Rule::unique('products', 'proName')->ignore($product->id)
             ],
-            'proCost' => 'required|numeric|min:0.0|max:1000000',
-            'proPrice' => 'required|numeric|min:0.0|max:1000000',
+            'proCost' => 'required|numeric|min:0.01|max:999999',
+            'proPrice' => 'required|numeric|min:0.01|max:999999',
             'proSeason' => 'required',
             'proOrigin' => 'required',
-            'proStock' => 'required|numeric|min:1|max:1000000',
-            'proDiscount' => 'required|numeric|min:0|max:100',
+            'proStock' => 'required|numeric|min:0|max:999999',
+            'proDiscount' => 'required|numeric|min:0|max:99',
             'category_id' => 'required',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|array',
+            'image' => 'array',
             'image.*' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             'proDescription' => 'required|string|min:1|max:20000',
         ]);
@@ -174,7 +180,8 @@ class ProductsController extends Controller
         // update product
         $product->update($resulstUpdate);
 
-        return redirect()->route('admin.products.index')->with('success', 'Product edited successfully');
+        return redirect()->back()->with('success', 'Product edited successfully');
+        // return redirect()->route('admin.products.index')->with('success', 'Product edited successfully');
     }
 
     public function proTableActions(Request $request)
@@ -189,7 +196,7 @@ class ProductsController extends Controller
 
                 if ($request->selected_id != null) {
                     Product::whereIn('id', $request->selected_id)->increment('proStock', $restockValue);
-                    return back()->with('success', 'Selected products have been deactivated');
+                    return back()->with('success', 'Selected products have been restocked');
                 } else {
                     return back()->with('fail', 'no product(s) selected!');
                 }
@@ -203,7 +210,7 @@ class ProductsController extends Controller
             case 'active':
                 if ($request->selected_id != null) {
                     Product::whereIn('id', $request->selected_id)->update(['proActive' => 1]);
-                    return back()->with('success', 'Selected products have been deactivated');
+                    return back()->with('success', 'Selected products have been REactivated');
                 } else {
                     return back()->with('fail', 'no product(s) selected!');
                 }

@@ -107,7 +107,7 @@
 								<br>
 								Name: {{ $orderName }}
 								<br>
-								Phone: {{ $orderPhone }}
+								Phone: {{ number_format($orderPhone, 0, ".", " ") }}
 								<br>
 								Address: {{ $orderAddress }}
 							</address>
@@ -118,7 +118,7 @@
 								<br>
 								Name: {{ $shippingName }}
 								<br>
-								Phone: {{ $shippingPhone }}
+								Phone: {{ number_format($shippingPhone, 0, ".", " ") }}
 								<br>
 								Address: {{ $shippingAddress }}
 							</address>
@@ -148,9 +148,10 @@
 										@foreach ($cartItems as $item)
 											<tr>
 												<td>{{ $item->proName }}</td>
-												<td class="text-center">{{ ($item->proPrice * (100 - $item->proDiscount)) / 100 }}</td>
+												<td class="text-center">{{ number_format(($item->proPrice * (100 - $item->proDiscount)) / 100, 2) }}</td>
 												<td class="text-center"> {{ $cart[$item->id] }}</td>
-												<td class="text-right">{{ (($item->proPrice * (100 - $item->proDiscount)) / 100) * $cart[$item->id] }}</td>
+												<td class="text-right">
+													{{ number_format((($item->proPrice * (100 - $item->proDiscount)) / 100) * $cart[$item->id], 2) }}</td>
 											</tr>
 										@endforeach
 									</tbody>
@@ -160,25 +161,25 @@
 											<td class="thick-line"></td>
 											<td class="thick-line"></td>
 											<td class="thick-line text-center"><strong>Subtotal</strong></td>
-											<td class="thick-line text-right">${{ $subtotal }}</td>
+											<td class="thick-line text-right">${{ number_format($subtotal, 2) }}</td>
 										</tr>
 										<tr>
 											<td class="no-line"></td>
 											<td class="no-line"></td>
 											<td class="no-line text-center"><strong>Shipping</strong></td>
-											<td class="no-line text-right">${{ $shipping }}</td>
+											<td class="no-line text-right">${{ number_format($shipping, 2) }}</td>
 										</tr>
 										<tr>
 											<td class="no-line"></td>
 											<td class="no-line"></td>
 											<td class="no-line text-center"><strong>Discount</strong></td>
-											<td class="no-line text-right">${{ $discountAmount }}</td>
+											<td class="no-line text-right">${{ number_format($discountAmount, 2) }}</td>
 										</tr>
 										<tr>
 											<td class="no-line"></td>
 											<td class="no-line"></td>
 											<td class="no-line text-center"><strong>Total</strong></td>
-											<td class="no-line text-right">${{ $finalPrice }}</td>
+											<td class="no-line text-right">${{ number_format($finalPrice, 2) }}</td>
 										</tr>
 									</tbody>
 								</table>
@@ -280,6 +281,5 @@
 			</div>
 		</div>
 	</div>
-	<script>
-	</script>
+	<script></script>
 @endsection

@@ -48,45 +48,45 @@
 																<label for="changeSender"><strong>Change sender</strong></label>
 															</div>
 														@endif
-														<p><input class="form-control" name="orderName" type="text" placeholder="*** Sender Name"
-																id="inputOrderName" value="{{ old("orderName", $user?->name) }}" {{ $user?->name ? "readonly" : "" }}>
+														<p><input class="form-control" name="orderName" type="text" maxlength="255"
+																placeholder="*** Sender Name" id="inputOrderName" value="{{ old("orderName", $user?->name) }}"
+																{{ $user?->name ? "readonly" : "" }}>
 															@error("orderName")
 																<span class="text-danger">*** {{ $message }} </span>
 															@enderror
 														</p>
-														<p><input class="form-control" name="orderEmail" type="email" placeholder="Sender email"
+														<p><input class="form-control" name="orderEmail" type="email" maxlength="255" placeholder="Sender email"
 																id="inputOrderEmail" value="{{ old("orderEmail", $user?->email) }}"
 																{{ $user?->email ? "readonly" : "" }}>
 														</p>
-														<p><input class="form-control" name="orderPhone" type="tel" placeholder="*** Sender Phone"
-																id="inputOrderPhone" value="{{ old("orderPhone", $user?->phone) }}"
+														<p><input class="form-control inputPhone" name="orderPhone" type="text" maxlength="16"
+																placeholder="*** Sender Phone" id="inputOrderPhone" value="{{ old("orderPhone", $user?->phone) }}"
 																{{ $user?->phone ? "readonly" : "" }}>
 															@error("orderPhone")
 																<span class="text-danger">*** {{ $message }} </span>
 															@enderror
 														</p>
-														<p><input class="form-control" name="orderAddress" type="text" placeholder="*** Sender Address"
-																id="inputOrderAddress" value="{{ old("orderAddress", $user?->address) }}"
-																{{ $user?->address ? "readonly" : "" }}>
+														<p><input class="form-control" name="orderAddress" type="text" maxlength="255"
+																placeholder="*** Sender Address" id="inputOrderAddress"
+																value="{{ old("orderAddress", $user?->address) }}" {{ $user?->address ? "readonly" : "" }}>
 															@error("orderAddress")
 																<span class="text-danger">*** {{ $message }} </span>
 															@enderror
 														</p>
-
 														@if (Session::has("user"))
 															<div class="form-check mt-2">
 																<input type="checkbox" name="" id="checkDeliveryYourself">
 																<label for="checkDeliveryYourself"><strong>Delivery to yourself</strong></label>
 															</div>
 														@endif
-														<p><input class="form-control" type="text" name="shippingName" id="InputShippingName"
+														<p><input class="form-control" type="text" maxlength="255" name="shippingName" id="InputShippingName"
 																placeholder="*** Receiver Name"value="{{ old("shippingName") }}">
 															@error("shippingName")
 																<span class="text-danger">*** {{ $message }} </span>
 															@enderror
 														</p>
-														<p><input class="form-control" type="text" name="shippingPhone" id="inputShippingPhone"
-																placeholder="*** Receiver Phone"value="{{ old("shippingPhone") }}">
+														<p><input class="form-control inputPhone" type="text" maxlength="255" name="shippingPhone"
+																id="inputShippingPhone" placeholder="*** Receiver Phone"value="{{ old("shippingPhone") }}">
 															@if (!Session::has("user"))
 																<p class=""><small>phone must be 10-16 number</small></p>
 															@endif
@@ -95,15 +95,15 @@
 															@enderror
 														</p>
 
-														<p><input class="form-control" type="text" name="shippingAddress" id="inputShippingAddress"
-																placeholder="*** Receiver address"value="{{ old("shippingAddress") }}">
+														<p><input class="form-control" type="text" maxlength="255" name="shippingAddress"
+																id="inputShippingAddress" placeholder="*** Receiver address"value="{{ old("shippingAddress") }}">
 															@error("shippingAddress")
 																<span class="text-danger">*** {{ $message }} </span>
 															@enderror
 														</p>
 														<p>
-															<textarea class="form-control" name="note" id="note" cols="30" rows="10" placeholder="Order note"
-															 maxlength="10000"></textarea>
+															<textarea class="form-control" name="note" id="note" cols="30" rows="10"
+															 placeholder="Order note" maxlength="10000"></textarea>
 														</p>
 														@error("note")
 															<span class="text-danger">*** {{ $message }} </span>
@@ -214,7 +214,7 @@
                                                             @else
                                                                 {{ $item->max_discount_value }} @endif
 																		@else {{ $item->discount_value }} @endif code={{ $item->code }}>
-																			{{ $item->code }} - value:
+																			{{ $item->code }} - max: ${{ $item->max_discount_value }}
 																		</option>
 																		{{-- @endif --}}
 																	@else
@@ -225,7 +225,7 @@
                                                                 @else
                                                                     {{ $item->max_discount_value }} @endif
 																			@else {{ $item->discount_value }} @endif code={{ $item->code }}>
-																				{{ $item->code }} - value:
+																				{{ $item->code }} - max: ${{ $item->max_discount_value }}
 																			</option>
 																		@endif
 																	@endif
@@ -247,8 +247,7 @@
 											<a id="" class="boxed-btn">Place Order</a>
 										@endif
 									</div>
-									<div class="
-                                    d-none">
+									<div class="d-none">
 										<div class="">
 											<label for="">Base subtotal</label>
 											<input class="form-control" type="text" name="subtotal" id="subtotal" value={{ $subtotal }}>
@@ -360,7 +359,7 @@
 				$('#finalPriceShow').html(finalPrice);
 				$('#discountCode').val(code);
 			});
-			$('#inputPhone').on('input', function() {
+			$('.inputPhone').on('input', function() {
 				$(this).val($(this).val().replace(/[^0-9]/g, ''));
 			});
 		});

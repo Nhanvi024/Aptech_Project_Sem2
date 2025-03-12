@@ -26,7 +26,7 @@
 					@method("PUT")
 					<div class="">
 						<label for="">Name: </label>
-						<input class="form-control" type="text" name="proName" id="" placeholder="Enter name"
+						<input class="form-control" maxlength="255" type="text" name="proName" id="proName" placeholder="Enter name"
 							value="{{ old(" proName", $product->proName) }}">
 						@error("proName")
 							<span class="text-danger">*** {{ $message }} </span>
@@ -34,16 +34,16 @@
 					</div>
 					<div class="">
 						<label for="">Cost: </label>
-						<input class="form-control" type="text" name="proCost" id="" placeholder="Enter cost"
-							value="{{ old(" proCost", $product->proCost) }}">
+						<input class="form-control" type="number" min="0.01" max="999999" step="0.01" name="proCost"
+							id="" placeholder="Enter cost" value="{{ old(" proCost", $product->proCost) }}">
 						@error("proCost")
 							<span class="text-danger">*** {{ $message }} </span>
 						@enderror
 					</div>
 					<div class="">
 						<label for="">Price: </label>
-						<input class="form-control" type="text" name="proPrice" id="" placeholder="Enter price"
-							value="{{ old(" proPrice", $product->proPrice) }}">
+						<input class="form-control" type="number"min="0.01" max="999999" step="0.01" name="proPrice" id=""
+							placeholder="Enter price" value="{{ old(" proPrice", $product->proPrice) }}">
 						@error("proPrice")
 							<span class="text-danger">*** {{ $message }} </span>
 						@enderror
@@ -67,24 +67,24 @@
 					</div>
 					<div class="">
 						<label for="">Origin: </label>
-						<input class="form-control" type="text" name="proOrigin" id="" placeholder="Enter origin"
-							value={{ old("proOrigin", $product->proOrigin) }}>
+						<input class="form-control" maxlength="255" type="text" name="proOrigin" id="proOrigin"
+							placeholder="Enter origin" value="{{ old('proOrigin', $product->proOrigin) }}">
 						@error("proOrigin")
 							<span class="text-danger">*** {{ $message }} </span>
 						@enderror
 					</div>
 					<div class="">
 						<label for="">Stock: </label>
-						<input class="form-control" type="number" name="proStock" id="" placeholder="Enter stock"
-							value={{ old("proStock", $product->proStock) }}>
+						<input class="form-control inputNumberInt" type="number" min="0" max="999999" name="proStock"
+							id="proStock" placeholder="Enter stock" value={{ old("proStock", $product->proStock) }}>
 						@error("proStock")
 							<span class="text-danger">*** {{ $message }} </span>
 						@enderror
 					</div>
 					<div class="">
 						<label for="">Discount: </label>
-						<input class="form-control" type="number" name="proDiscount" id="" placeholder="Enter discount"
-							value={{ old("proDiscount", $product->proDiscount) }}>
+						<input class="form-control inputNumberInt" type="text" maxlength="2" name="proDiscount" id=""
+							placeholder="Enter discount" value={{ old("proDiscount", $product->proDiscount) }}>
 						@error("proDiscount")
 							<span class="text-danger">*** {{ $message }} </span>
 						@enderror
@@ -111,10 +111,10 @@
 									<img class="mx-auto my-3" src="{{ asset("storage/products/" . $image) }}" alt="{{ $image }}"
 										width="150px" height="150px">
 									<button proId={{ $product->id }} value={{ $image }}
-										class="btn rounded bg-secondary-lt text-black mt-1 mx-auto
+										class="btn rounded bg-danger text-black mt-1 mx-auto
                                 btnImageRemove">Remove</button>
 									<button proId={{ $product->id }} value={{ $image }}
-										class="btn rounded bg-primary-subtle mt-1 mx-auto btnImageSetMain mb-3">Set
+										class="btn rounded bg-success mt-1 mx-auto btnImageSetMain mb-3">Set
 										main</button>
 								</div>
 							@endforeach
@@ -193,6 +193,19 @@
 					// $.ajax({
 				})
 			});
+			$('.inputNumberInt').on('input', function() {
+				$(this).val($(this).val().replace(/[^0-9]/g, ''))
+			});
+			$('.inputNumber').on('input', function() {
+				$(this).val($(this).val().replace(/[^0-9]/g, ''))
+			});
+			$('#proName').on('input', function() {
+				$(this).val($(this).val().replace(/[^a-z0-9 ]/gi, ''))
+			});
+			$('#proOrigin').on('input', function() {
+				$(this).val($(this).val().replace(/[^a-z0-9 ]/gi, ''))
+			});
+
 		});
 	</script>
 

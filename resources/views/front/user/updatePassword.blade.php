@@ -22,10 +22,10 @@
 							<form action="{{ route("user.user.profileUpdatePasswordPost") }}" method="POST">
 								@csrf
 								{{-- input old password, new password, confirm new password --}}
-								<input type="text" name="userId" value="{{ $user->id }}">
+								<input type="hidden" name="userId" value="{{ $user->id }}">
 								<div class="form-group">
 									<label for="oldPassword">Current Password:</label>
-									<input type="password" class="form-control" id="" name="oldPassword">
+									<input type="password" maxlength="100" class="form-control" id="" name="oldPassword">
 									<span id="oldPassword" class="text-danger initError"></span>
 									@if (Session::has("oldPassword"))
 										<span class="text-danger">*** {{ Session::get("oldPassword") }} </span>
@@ -33,13 +33,13 @@
 								</div>
 								<div class="form-group">
 									<label for="newPassword">New Password:</label>
-									<input type="password" class="form-control" id="newPassword" name="newPassword">
+									<input type="password" maxlength="100" class="form-control" id="newPassword" name="newPassword">
 									<div class=""><small id="passwordHelp" class="form-text text-muted">*** Password must be at least 8
 											characters
 											long and contain at
 											least one uppercase letter, one lowercase letter and one number.</small></div>
 									<label for="newPassword_confirmation">Confirm New Password:</label>
-									<input type="password" class="form-control" id="confirmNewPassword" name="newPassword_confirmation">
+									<input type="password" maxlength="100" class="form-control" id="confirmNewPassword" name="newPassword_confirmation">
 									@error("newPassword")
 										<span class="text-danger">*** {{ $message }} </span>
 									@enderror

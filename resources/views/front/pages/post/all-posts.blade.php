@@ -1,6 +1,6 @@
 @extends("front.layouts.pages-layout")
 @section("pageTitle")
-	Fruitkha lalala
+	Fruitkha
 @endsection
 @section("content")
 	<!-- breadcrumb-section -->
@@ -32,7 +32,7 @@
 							</a>
 							<div class="news-text-box">
 								<h3>
-									<a href="{{ route("user.news", $post->id) }}">{{ $post->title }}</a>
+									<a href="{{ route("user.news", $post->id) }}" style="overflow: hidden;">{{Str::limit($post->title,40,' ...')  }}</a>
 								</h3>
 								<p class="blog-meta">
 									<span class="author"><i class="fas fa-user"></i>

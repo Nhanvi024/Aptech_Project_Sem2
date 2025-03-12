@@ -1,6 +1,6 @@
 @extends("front.layouts.pages-layout")
 @section("pageTitle")
-	Fruitkha lalala
+	Fruitkha
 @endsection
 @section("content")
 	<!-- breadcrumb-section -->
@@ -10,7 +10,7 @@
 				<div class="col-lg-8 offset-lg-2 text-center">
 					<div class="breadcrumb-text">
 						<p>Read the Details</p>
-						<h1>Single Article</h1>
+						<h1>{{ $currentPost->title }}</h1>
 					</div>
 				</div>
 			</div>
@@ -27,9 +27,11 @@
 						<div class="single-article-text">
 							<div>
 								<a href="{{ route("user.single.news", $currentPost->id) }}">
-									<img src="{{ asset("storage/posts/" . $currentPost->post_featured_image) }}" alt="">
+									<img src="{{ asset("storage/posts/" . $currentPost->post_featured_image) }}" style="min-height: 300px;"
+										alt="" class="d-block mx-auto">
 								</a>
 							</div>
+							<br>
 							<p class="blog-meta">
 								<span class="author"><i class="fas fa-user"></i>
 									{{ $currentPost->author->name ?? "Admin" }}</span>
@@ -40,6 +42,7 @@
 								{{ $currentPost->title }}
 							</h1>
 							<hr style="background-color: gray">
+							<br>
 							<div>
 								@php
 									$texts = $currentPost->content;
@@ -63,30 +66,57 @@
 												$item = is_array($item) ? implode(" ", $item) : $item;
 											@endphp
 											@if (Str::endsWith($item, [".jpg", ".jpeg", ".png", ".gif", ".webp"]))
-												<div class="image-item">
-													<img src="{{ asset("storage/posts/" . $item) }}" alt="Image" class="img-fluid" width="500px">
+												<div class="image-item items-center">
+													<img src="{{ asset("storage/posts/" . $item) }}" alt="Image" class="img mx-auto d-block" height=""
+														width="500px" style="aspect-ratio: ;">
 												</div>
+												<br>
 											@else
-												<div class="content-item">
-													<h4>{{ $item }}</h4>
+												<div class="content-item my-0" style="white-space: pre-wrap; height: fit-content;">
+													<p>{{ $item }}</p>
 												</div>
+												<br>
 											@endif
 										@endforeach
 									</div>
 								@endif
-
-
 							</div>
 						</div>
-
 					</div>
+					<hr class="d-lg-none" style="background-color: gray">
+
 				</div>
-				<div class="col-lg-2" style="border-left: 1px solid gray">
+				<div class="d-none d-lg-block col-12 col-lg-2">
 					<h4>New products</h4>
 					<div class="row product-lists text-center">
 						@foreach ($products as $item)
-							<div class="col-12 mx-auto text-center px-2 {{ str_replace(" ", "", $item->category->catName) }}">
-								<div class="single-product-item">
+							<div class="col-4 col-lg-12 mx-auto text-center px-2 {{ str_replace(" ", "", $item->category->catName) }}">
+								<div class="single-product-item" style="height: ">
+									<div class="ribbon right {{ $item->proDiscount > 0 ? "" : "d-none" }}" style="--c: #CC333F;--f: 5px;">
+										{{ $item->proDiscount > 40 ? "HOT SALE" : "SALE" }} {{ $item->proDiscount }}%
+									</div>
+									<div class="product-image">
+										<a href="/productDetail/{{ $item->id }}">
+											<img src={{ asset("storage/products/" . $item->proImageURL[0]) }} alt="" style="aspect-ratio: 1/1;">
+										</a>
+									</div>
+									<h3 style="width: 80%; margin: auto;height: ;">
+										{{Str::limit($item->proName,15,' ...')  }}</h3>
+									<span class="product-price text-danger" style="position: absolute;bottom: 25px;left: 50%;transform: translate(-50%,-50%)">
+										<del class="h6 text-secondary text-sm">{{ $item->proDiscount > 0 ? "$" . $item->proPrice : " " }}</del>
+										$<strong
+											class="h4 text-danger">{{ number_format(($item->proPrice * (100 - $item->proDiscount)) / 100, 2) }}</strong></span>
+								</div>
+							</div>
+						@endforeach
+					</div>
+				</div>
+				<div class="d-block d-lg-none col-12 col-lg-2">
+					<h4>New products</h4>
+					<div class="row product-lists text-center">
+						@foreach ($products as $item)
+							<div class="col-4 col-lg-12 mx-auto text-center px-2 {{ str_replace(" ", "", $item->category->catName) }}">
+								<div class="single-product-item" style="height: 350px" >
 									<div class="ribbon right {{ $item->proDiscount > 0 ? "" : "d-none" }}" style="--c: #CC333F;--f: 5px;">
 										{{ $item->proDiscount > 40 ? "HOT SALE" : "SALE" }} {{ $item->proDiscount }}%
 									</div>
@@ -97,7 +127,7 @@
 									</div>
 									<h3 style="width: 80%; margin: auto;height: ;">
 										{{ $item->proName }}</h3>
-									<span class="product-price text-danger">
+									<span class="product-price text-danger mx-auto" style="position: absolute;bottom: 50px;left: 50%;transform: translate(-50%,-30%)">
 										<del class="h6 text-secondary text-sm">{{ $item->proDiscount > 0 ? "$" . $item->proPrice : " " }}</del>
 										$<strong
 											class="h4 text-danger">{{ number_format(($item->proPrice * (100 - $item->proDiscount)) / 100, 2) }}</strong></span>
@@ -131,8 +161,8 @@
 									</div>
 								</a>
 								<div class="carousel-caption d-md-block mx-auto" style="background-color: rgba(0,0,0,0.3);">
-									<h1 class="">{{ $post->title }}</h1>
-									<p>{{ Str::limit($textContent, 100, " ...") }}</p>
+									<h1 class="" style="color:  rgba(255,255,255,0.7)">{{ $post->title }}</h1>
+									{{-- <p>{{ Str::limit($textContent, 100, " ...") }}</p> --}}
 								</div>
 							</div>
 						@endforeach
