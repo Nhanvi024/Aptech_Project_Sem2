@@ -74,13 +74,17 @@
 										Status Active</option>
 									<option value='4' {{ request()->orderByFil == "4" ? "selected" : "" }}>
 										Status Deactive</option>
+									<option value='5' {{ request()->orderByFil == "5" ? "selected" : "" }}>
+										Newest first</option>
+									<option value='6' {{ request()->orderByFil == "6" ? "selected" : "" }}>
+										Oldest first</option>
 								</select>
 							</div>
 
 							<div class="col text-end my-1">
 								<button type="submit" class=" btn btn-primary" style="width: fit-content">Apply</button>
-								<a class="btn btn-primary" style="width: fit-content;" href="{{ route("admin.products.resetFilter") }}">Reset
-									Filter</a>
+								<a class="btn btn-warning" style="width: fit-content;" href="{{ route("admin.products.resetFilter") }}"
+									onclick="return confirm('Confirm reset filter !!!')">Reset</a>
 							</div>
 						</form>
 					</div>
@@ -91,10 +95,9 @@
 		<!-- Page body -->
 		<div class="page-body">
 			<div class="container-xl">
-				<x-form-alert />
-
-
-
+				<div class="col-12">
+					<x-form-alert />
+				</div>
 				<form action="{{ route("admin.products.proTableActions") }}" method="POST">
 					@csrf
 					<div>
@@ -105,18 +108,17 @@
 						<span class="btn-group" role="group">
 							<button class="btn btn-sm btn-primary border-0" type="submit" name="action" value="reStock">RESTOCK
 								SELECTED BY</button>
-							<span class="btn btn-sm btn-primary border-0"><input type="text" name="restockValue" id=""
-									style="width: 75px; height: 23px;"></span>
+							<span class="btn btn-sm btn-primary border-0"><input type="text" name="restockValue" maxlength="6"
+									id="" style="width: 75px; height: 23px;"></span>
 						</span>
 					</div>
-					{{-- @dd($products[21]->proImageURL[0]) --}}
 					<div class="table-responsive" style="height: 65vh">
-						<table class="table  table-hover table-bordered align-middle bg-azure-lt">
+						<table class="table table-hover table-bordered align-middle bg-azure-lt">
 							<thead class="sticky-top z-1">
 								<tr class="text-center">
 									<th class="text-white bg-secondary"><input type="checkbox" style="width: 15px;height: 15px;"
 											id="selectAllBox"></th>
-									<th class="text-white bg-secondary">ID</th>
+									<th class="text-white bg-secondary text-center">ID</th>
 									<th class="text-white bg-secondary">Name</th>
 									<th class="text-white bg-secondary">Cost</th>
 									<th class="text-white bg-secondary">Price</th>
@@ -133,15 +135,15 @@
 									<tr class="{{ $item->proActive == 0 ? "bg-secondary-lt" : "" }}">
 										<td class="text-center"><input type="checkbox" style="width: 25px;height: 25px;" name="selected_id[]"
 												class="selectBox" value="{{ $item->id }}" id=""></td>
-										<td>{{ $item->id }}</td>
+										<td class="text-center">{{ $item->id }}</td>
 										<td>{{ $item->proName }}</td>
-										<td>{{ $item->proCost }}</td>
-										<td>{{ $item->proPrice }}</td>
+										<td class="text-end">{{ $item->proCost }}</td>
+										<td class="text-end">{{ $item->proPrice }}</td>
 										<td
-											class="{{ $item->proStock > 80 ? "" : ($item->proStock > 30 ? "text-warning" : "fw-bold text-danger") }}">
+											class="text-end {{ $item->proStock > 80 ? "" : ($item->proStock > 30 ? "text-warning" : "fw-bold text-danger") }}">
 											{{ $item->proStock }}
 										</td>
-										<td>{{ $item->proDiscount }}</td>
+										<td class="text-end">{{ $item->proDiscount }}</td>
 										<td>{{ $item->category->catName }}</td>
 										<td style="width: 100px" class="">
 											<img src="{{ asset("storage/products/" . $item->proImageURL[0]) }}" alt="{{ $item->proImageURL[0] }}"
@@ -154,9 +156,9 @@
 												<span class="btn btn-sm bg-danger text-light">Inactive</span>
 											@endif
 										</td>
-										<td>
+										<td class="text-center">
 											<a class=" btn btn-sm btn-warning" href="{{ route("admin.products.edit", $item) }}">
-												<i class="fa-regular fa-pen-to-square"></i></i>
+												<i class="fa-regular fa-pen-to-square" style="width: 50px;"></i></i>
 											</a>
 										</td>
 									</tr>

@@ -33,11 +33,13 @@
 				<div class="d-xl-inline col-xl-3">
 					<h4 class="strong">Products Filter</h4>
 					<button class="cart-btn border-0 mb-3 buttonHomeApplyFilter">Apply Filter</button>
-					<button class="cart-btn border-0 mb-3 buttonHomeResetFilter">Reset Filter</button>
+					{{-- <button class="cart-btn border-0 mb-3 buttonHomeResetFilter" onclick="return confirm('reset filter')">Reset Filter</button> --}}
+					<a href="./" class="cart-btn border-0 mb-3 AHomeResetFilter" onclick="return confirm('reset filter')">Reset
+						Filter</a>
 					<form action="" method="GET" id="formFilter">
 						<div class="input-group mb-3">
-							<input type="text" class="form-control" placeholder="Search by name..." aria-label="Search" name="nameFil"
-								aria-describedby="basic-addon2" value="{{ request()->nameFil ?: "" }}">
+							<input type="text" class="form-control" id="inpSearch" placeholder="Search by name..." aria-label="Search"
+								name="nameFil" aria-describedby="basic-addon2" value="{{ request()->nameFil ?: "" }}" maxlength="20">
 							{{-- <div class="input-group-append">
 								<button class="btn btn-outline-secondary" type="button">Search</button>
 							</div> --}}
@@ -45,12 +47,12 @@
 						<div class="filter-price">
 							<label class="h4 strong" for="priceRange">Price range:</label>
 							<div class=" d-flex align-items-baseline">
-								<label class="" for="priceFrom">From </label>
-								<input class="form-control" style="50px" type="number" id="priceFrom" name="priceFrom" min="0"
-									max="10000" value={{ request()->priceFrom ?: 0 }}>
-								<label class="" for="priceTo">To</label>
-								<input class="form-control" style="50px" type="number" id="priceTo" name="priceTo" min="0"
-									max="10000" value={{ request()->priceTo ?: 10000 }}>
+								<label class="" for="priceFrom">From&nbsp; </label>
+								<input class="form-control" style="width: 75px" type="text" id="priceFrom" name="priceFrom" min="0"
+									max="10000"maxlength="5" value={{ request()->priceFrom ?: 0 }}>
+								<label class="" for="priceTo">&nbsp;To&nbsp;</label>
+								<input class="form-control" style="width: 75px" type="text" id="priceTo" name="priceTo" min="0"
+									max="10000" maxlength="5" value={{ request()->priceTo ?: 10000 }}>
 							</div>
 						</div>
 						<div class="filter-category">
@@ -63,8 +65,9 @@
 							@foreach ($categories as $item)
 								<div class="form-check">
 									<input type="checkbox" class="cateCheck" name="categoryFil[]" value="{{ $item->id }}"
-										id="{{ $item->catName }}" {{ in_array($item->id, [request()->categoryFil][0] ?: []) ? "checked" : "" }}>
-									<label for="{{ $item->catName }}">
+										id="{{ str_replace(" ", "", $item->catName) }}"
+										{{ in_array($item->id, [request()->categoryFil][0] ?: []) ? "checked" : "" }}>
+									<label for="{{ str_replace(" ", "", $item->catName) }}">
 										{{ $item->catName }}
 									</label>
 								</div>
@@ -75,7 +78,6 @@
 				<div class="col">
 					<div class="row product-lists">
 						@foreach ($products as $item)
-							{{-- @dd(Auth::user()); --}}
 							<div class="col-6 col-md-4 col-lg-4 text-center px-2 {{ str_replace(" ", "", $item->category->catName) }}">
 								<div class="single-product-item">
 									<div class="ribbon right {{ $item->proDiscount > 0 ? "" : "d-none" }}" style="--c: #CC333F;--f: 10px;">
@@ -124,40 +126,52 @@
 					<!-- Pagination -->
 					<div class="row">
 						<div class="col-lg-12 text-center">
+
 							<div class="pagination-wrap">
 								<ul>
-									<li>
-										@if ($products->currentPage() > 1)
-											{{-- <a href="{{ $products->previousPageUrl() }}"><i class="fas fa-angle-left"></i></a> --}}
+									@if ($products->currentPage() > 1)
+										<li>
 											<a href="{{ $products->appends(request()->except("page"))->previousPageUrl() }}"><i
 													class="fas fa-angle-left"></i></a>
-										@endif
-									</li>
-									@for ($i = 1; $i <= $products->lastPage(); $i++)
-										@if ($products->currentPage() == $i)
-											<li>
-												<a class="active">{{ $i }}</a>
-											</li>
-										@else
-											<li>
-												{{-- <a href="{{ $products->url($i) }}">{{ $i }}</a> --}}
-												<a href="{{ $products->appends(request()->except("page"))->url($i) }}">{{ $i }}</a>
-											</li>
+										</li>
+									@endif
+									@if ($products->currentPage() > 3)
+										<li>
+											<a href="{{ $products->appends(request()->except("page"))->url(1) }}">1</a>
+										</li>
+										<li> ... </li>
+									@endif
+									@for ($i = $products->currentPage() - 2; $i <= $products->currentPage() + 2; $i++)
+										@if ($i > 0 && $i <= $products->lastPage())
+											@if ($products->currentPage() == $i)
+												<li>
+													<a class="active">{{ $i }}</a>
+												</li>
+											@else
+												<li>
+													<a href="{{ $products->appends(request()->except("page"))->url($i) }}">{{ $i }}</a>
+												</li>
+											@endif
 										@endif
 									@endfor
-									<li>
-										@if ($products->currentPage() < $products->lastPage())
+									@if ($products->currentPage() < $products->lastPage() - 2)
+										<li> ... </li>
+										<li>
+											<a
+												href="{{ $products->appends(request()->except("page"))->url($products->lastPage()) }}">{{ $products->lastPage() }}</a>
+										</li>
+									@endif
+									@if ($products->currentPage() < $products->lastPage())
+										<li>
 											<a href="{{ $products->appends(request()->except("page"))->nextPageUrl() }}"><i
 													class="fas fa-angle-right"></i></a>
-											{{-- <a href="{{ $products->nextPageUrl() }}"><i class="fas fa-angle-right"></i></a> --}}
-										@endif
-									</li>
+										</li>
+									@endif
 								</ul>
 							</div>
 						</div>
 					</div>
 					<!-- End Pagination -->
-
 
 				</div>
 			</div>
@@ -171,23 +185,10 @@
 	<script>
 		$(document).ready(function() {
 
-			// function fecthData() {
-			// 	$.ajax({
-			// 		url: '/',
-			// 		type: 'GET',
-			// 		dataType: 'json',
-			// 		success: function(response) {
-			// 			console.log('chay function fetchData');
-			// 			console.log(response);
-			// 		}
-			// 	})
-			// 	console.log('chay function fetchData');
-			// }
 
 			$('.buttonAddToCart').on('click', function(e) {
 				// e.preventDefault(); // Prevent form submission
 				var product_id = $(this).val();
-				// alert('Product ID:' + product_id);
 				console.log('Product ID:' + product_id);
 				// Add product to the cart using AJAX
 				$.ajax({
@@ -240,10 +241,10 @@
 				// alert(test);
 			}));
 			$('#priceTo').on('input', (function() {
-				$('#priceTo').attr('min', $('#priceFrom').val());
+				$(this).val($(this).val().replace(/[^0-9]/g, ''));
 			}));
 			$('#priceFrom').on('input', (function() {
-				$('#priceFrom').attr('max', $('#priceTo').val());
+				$(this).val($(this).val().replace(/[^0-9]/g, ''));
 			}));
 			$('.buttonHomeResetFilter').on('click', (function(e) {
 				e.preventDefault(); // Prevent form submission
@@ -252,6 +253,10 @@
 			}));
 			$('.buttonHomeApplyFilter').on('click', (function() {
 				$('#formFilter').submit();
+			}));
+			$('#inpSearch').on('input', (function() {
+				//remove special chracters
+				$(this).val($(this).val().replace(/[^a-zA-Z0-9 ]/g, ''));
 			}));
 		});
 	</script>

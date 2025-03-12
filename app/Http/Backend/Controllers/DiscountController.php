@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\DiscountUse;
 use App\Models\User;
 use Illuminate\Support\Facades\Session;
+
 class DiscountController extends Controller
 {
     public function index(Request $request)
@@ -119,6 +120,7 @@ class DiscountController extends Controller
             'quantity' => $request->quantity,
             'condition' => $request->condition,
             'max_uses' => $request->max_uses,
+            'used_by' => [],
             'starts_at' => Carbon::parse($request->starts_at),
             'expires_at' => Carbon::parse($request->expires_at),
 
@@ -138,6 +140,4 @@ class DiscountController extends Controller
 
         return redirect()->route('admin.discount.index')->with('success', 'Status updated successfully!');
     }
-
- 
 }

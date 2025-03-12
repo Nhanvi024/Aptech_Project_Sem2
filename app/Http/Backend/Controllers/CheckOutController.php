@@ -69,72 +69,11 @@ class CheckOutController extends Controller
         };
         //// End innit header data
 
+        if ($data['cart'] == []) {
+            return redirect()->route('user.user.cart.index')->with('fail', 'Your cart is empty, please add some products before checkout.');
+        }
         return view('front.checkout.index', $data);
     }
-    // public function checkoutPost(Request $request)
-    // {
-    //     // dd($request->all());
-    //     $cartItems = [];
-    //     $dataCart = null;
-    //     if (Session::has('user')) {
-    //         $user = Session::get('user');
-    //         if (
-    //             Cart::where('userId', $user->id)->first()->itemsList !== null
-    //         ) {
-    //             $cartItems = Product::whereIn('id', array_keys(Cart::where('userId', $user->id)->first()->itemsList))->get();
-    //         }
-    //         $dataCart = Cart::where('userId', $user->id)->first()->itemsList;
-    //     }
-    //     if (Cookie::get('cart') && !Session::has('user')) {
-    //         // dd(unserialize(Cookie::get('cart')));
-    //         $cartItems =  Product::whereIn('id', array_keys(unserialize(Cookie::get('cart'))))->get();
-    //         $dataCart = unserialize(Cookie::get('cart'));
-    //     };
-    //     // dd($cartItems);
-    //     $totalCost = 0;
-    //     foreach ($cartItems as $item) {
-    //         $totalCost += $item->proCost * $dataCart[$item->id];
-    //     }
-    //     // dd($dataCart);
-
-    //     $request->validate([
-    //         'orderPhone' => 'required|string|min:10|max:16',
-    //         'shippingAddress' => 'required',
-    //     ]);
-    //     $userId = null;
-    //     if (Session::has('user')) {
-    //         $userId = Auth::id();
-    //     }
-    //     $request->merge(['userId' => $userId]);
-    //     $request->merge(['itemsList' => $dataCart]);
-
-    //     // dd($userId);
-    //     Order::create([
-    //         'userId' => $userId,
-    //         'orderName' => $request->orderName,
-    //         'orderEmail' => $request->orderEmail,
-    //         'orderPhone' => $request->orderPhone,
-    //         'orderAddress' => $request->orderAddress,
-    //         'shippingAddress' => $request->shippingAddress,
-    //         'itemsList' => $dataCart,
-    //         'note' => $request->note,
-    //         'totalCost' => $totalCost,
-    //         'shipping' => $request->shipping,
-    //         'finalPrice' => $request->finalPrice,
-    //         'discountCode' => $request->discountCode,
-    //         'payment_id' => $request->order_id
-    //     ]);
-    //     //clear cart
-    //     Cookie::queue(Cookie::forget('cart'));
-    //     Session::forget('cart');
-    //     if (Session::has('user')) {
-    //         // clear cart not delete
-    //         $Cart = Cart::where('userId', $userId)->first();
-    //         $Cart->itemsList = [];
-    //         $Cart->save();
-    //     }
-    //     return redirect()->route('user.shop')->with('success', 'you have successfully created a new order');
-    // }
 
 
     public function checkoutPost(Request $request)
@@ -152,7 +91,6 @@ class CheckOutController extends Controller
             $dataCart = Cart::where('userId', $user->id)->first()->itemsList;
         }
         if (Cookie::get('cart') && !Session::has('user')) {
-            // dd(unserialize(Cookie::get('cart')));
             $cartItems =  Product::whereIn('id', array_keys(unserialize(Cookie::get('cart'))))->get();
             $dataCart = unserialize(Cookie::get('cart'));
         };
@@ -166,14 +104,13 @@ class CheckOutController extends Controller
 
         //// validate order and shipping form
         $request->validate([
-            // 'orderPhone' => 'required|string|min:10|max:16',
             'orderName' => 'required|string|min:3|max:255',
             'orderPhone' => 'required|string|min:10|max:16',
             'orderAddress' => 'required|string',
             'shippingName' => 'required|string|min:3|max:255',
             'shippingPhone' => 'required|string|min:10|max:16',
             'shippingAddress' => 'required|string',
-            'note' => 'string|min:3|max:10000',
+            'note' => 'max:10000',
         ]);
 
         //// get userId if user logged in, $userId = null if user not logged in
@@ -246,72 +183,4 @@ class CheckOutController extends Controller
 
         return view('front.checkout.payment', $data);
     }
-    // public function paymentPost(Request $request)
-    // {
-    //     // dd($request->all());
-    //     // dd('toi day roi');
-    //     $cartItems = [];
-    //     $dataCart = null;
-    //     if (Session::has('user')) {
-    //         $user = Session::get('user');
-    //         if (
-    //             Cart::where('userId', $user->id)->first()->itemsList !== null
-    //         ) {
-    //             $cartItems = Product::whereIn('id', array_keys(Cart::where('userId', $user->id)->first()->itemsList))->get();
-    //         }
-    //         $dataCart = Cart::where('userId', $user->id)->first()->itemsList;
-    //     }
-    //     if (Cookie::get('cart') && !Session::has('user')) {
-    //         // dd(unserialize(Cookie::get('cart')));
-    //         $cartItems =  Product::whereIn('id', array_keys(unserialize(Cookie::get('cart'))))->get();
-    //         $dataCart = unserialize(Cookie::get('cart'));
-    //     };
-    //     // dd($cartItems);
-    //     $totalCost = 0;
-    //     foreach ($cartItems as $item) {
-    //         $totalCost += $item->proCost * $dataCart[$item->id];
-    //     }
-    //     // dd($dataCart);
-
-    //     $request->validate([
-    //         'orderPhone' => 'required|string|min:10|max:16',
-    //         'shippingAddress' => 'required',
-    //     ]);
-    //     $userId = null;
-    //     if (Session::has('user')) {
-    //         $userId = Auth::id();
-    //     }
-    //     $request->merge(['userId' => $userId]);
-    //     $request->merge(['itemsList' => $dataCart]);
-
-    //     dd($dataCart);
-    //     // dd($userId);
-    //     Order::create([
-    //         'userId' => $userId,
-    //         'orderName' => $request->orderName,
-    //         'orderEmail' => $request->orderEmail,
-    //         'orderPhone' => $request->orderPhone,
-    //         'orderAddress' => $request->orderAddress,
-    //         'shippingAddress' => $request->shippingAddress,
-    //         'itemsList' => $dataCart,
-    //         'note' => $request->note,
-    //         'totalCost' => $totalCost,
-    //         'shipping' => $request->shipping,
-    //         'finalPrice' => $request->finalPrice,
-    //         'discountCode' => $request->discountCode,
-    //         'payment_id' => $request->order_id
-    //     ]);
-    //     //clear cart
-    //     Cookie::queue(Cookie::forget('cart'));
-    //     Session::forget('cart');
-    //     if (Session::has('user')) {
-    //         // clear cart not delete
-    //         $Cart = Cart::where('userId', $userId)->first();
-    //         $Cart->itemsList = [];
-    //         $Cart->save();
-    //     }
-    //     Session::forget('paymentData');
-    //     return redirect()->route('user.shop')->with('success', 'you have successfully created a new order');
-    // }
-
 }

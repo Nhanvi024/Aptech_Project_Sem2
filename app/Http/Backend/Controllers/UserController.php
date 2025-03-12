@@ -84,11 +84,10 @@ class UserController extends Controller
         if (!Cookie::has('cart')) {
             Cookie::queue('cart', serialize([]), 60 * 24 * 30);
         };
-        $user = Auth::user();
+        $user = User::find(Auth::id());
         $cartItems = [];
         $dataCart = null;
         if (Session::has('user')) {
-            $user = Session::get('user');
             if (
                 Cart::where('userId', $user->id)->first()->itemsList !== null
             ) {
@@ -121,7 +120,7 @@ class UserController extends Controller
             'address' => 'string|nullable|max:255',
             'phone' => [
                 'required',
-                'numeric',
+                'string',
                 'min:10',
                 'max:16',
                 Rule::unique('users', 'phone')->ignore($user->id),

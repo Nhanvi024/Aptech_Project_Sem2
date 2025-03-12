@@ -33,16 +33,16 @@
 					</div>
 					<div class="">
 						<label for="">Cost: </label>
-						<input class="form-control" type="text" name="proCost" id="" placeholder="Enter cost"
-							value="{{ old("proCost") }}">
+						<input class="form-control" type="number" min="0.01" max="999999" step="0.01" name="proCost"
+							id="" placeholder="Enter cost" value="{{ old("proCost") }}">
 						@error("proCost")
 							<span class="text-danger">*** {{ $message }} </span>
 						@enderror
 					</div>
 					<div class="">
 						<label for="">Price: </label>
-						<input class="form-control" type="text" name="proPrice" id="" placeholder="Enter price"
-							value="{{ old("proPrice") }}">
+						<input class="form-control" type="number"min="0.01" max="999999" step="0.01" name="proPrice" id=""
+							placeholder="Enter price" value="{{ old("proPrice") }}">
 						@error("proPrice")
 							<span class="text-danger">*** {{ $message }} </span>
 						@enderror
@@ -62,21 +62,24 @@
 					</div>
 					<div class="">
 						<label for="">Origin: </label>
-						<input class="form-control" type="text" name="proOrigin" id="" placeholder="Enter origin">
+						<input class="form-control" type="text" name="proOrigin" id="" placeholder="Enter origin"
+							value="{{ old("proOrigin") }}">
 						@error("proOrigin")
 							<span class="text-danger">*** {{ $message }} </span>
 						@enderror
 					</div>
 					<div class="">
 						<label for="">Stock: </label>
-						<input class="form-control" type="number" name="proStock" id="" placeholder="Enter stock">
+						<input class="form-control" type="number" name="proStock" id="" placeholder="Enter stock"
+							value="{{ old("proStock") }}">
 						@error("proStock")
 							<span class="text-danger">*** {{ $message }} </span>
 						@enderror
 					</div>
 					<div class="">
 						<label for="">Discount: </label>
-						<input class="form-control" type="number" name="proDiscount" id="" placeholder="Enter discount">
+						<input class="form-control" type="number" name="proDiscount" id="" placeholder="Enter discount"
+							value="{{ old("proDiscount") }}">
 						@error("proDiscount")
 							<span class="text-danger">*** {{ $message }} </span>
 						@enderror
@@ -86,7 +89,9 @@
 						<select class="form-select" name="category_id" id="">
 							<option value="">-- Select Category --</option>
 							@foreach ($categories as $item)
-								<option value="{{ $item->id }}">{{ $item->catName }}</option>
+								<option value="{{ $item->id }}" {{ old("category_id") == $item->id ? "selected " : " " }}>
+									{{ $item->catName }}
+								</option>
 							@endforeach
 						</select>
 						@error("category_id")
@@ -102,7 +107,7 @@
 					</div>
 					<div class="">
 						<label for="">Description: </label>
-						<textarea class="form-control" name="proDescription" id="" rows="4" placeholder="Enter description"></textarea>
+						<textarea class="form-control" name="proDescription" id="" rows="4" placeholder="Enter description">{{ old("proDescription") }}</textarea>
 						<p id="proDescription" class="text-danger"></p>
 						@error("proDescription")
 							<span class="text-danger">*** {{ $message }} </span>

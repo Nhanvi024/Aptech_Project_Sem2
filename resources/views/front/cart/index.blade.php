@@ -1,6 +1,6 @@
 @extends("front.layouts.pages-layout")
 @section("pageTitle")
-	Fruitkha lalala
+	Fruitkha
 @endsection
 @section("content")
 	<div class="page page-center">
@@ -8,7 +8,7 @@
 		<div class="container container-tight py-4">
 			<div class="text-center my-5">
 				<a href="." class="navbar-brand navbar-brand-autodark">
-					<img src="/assets/img/logo.png" style="scale: 2" width="" height="" alt="Tabler"
+					<img src="/assets/img/logo.png" style="scale: 2" width="" height="" alt="Fruitkha"
 						class="navbar-brand-image">
 				</a>
 			</div>
@@ -18,7 +18,7 @@
 				<div class="container">
 					<x-form-alert />
 					<div class="row">
-						<div class="col-lg-8 col-md-12">
+						<div class="col-lg-9 col-md-12">
 							<div class="cart-table-wrap">
 								<table class="cart-table">
 									<thead class="cart-table-head">
@@ -62,7 +62,7 @@
 														<input class="text-center inputCartItemQuantity" style="width: 60px;background: #f2802363;border: none"
 															inputmode="numeric" type="text" placeholder=""
 															value={{ $cart[$item->id] >= $item->proStock ? $item->proStock : $cart[$item->id] }}
-															data-productId={{ $item->id }} min="1" max="99999">
+															data-productId={{ $item->id }} min="1" max="99999" maxlength="5">
 														<button style="width: 30px"
 															class="btn cart-btn border-0 {{ $cart[$item->id] < $item->proStock ? "buttonAddToCart" : "" }} {{ $cart[$item->id] >= $item->proStock ? "bg-secondary" : "" }} "
 															value={{ $item->id }}>
@@ -89,12 +89,11 @@
 									<h3>Your cart is empty</h3>
 									<hr>
 									<a href="{{ route("user.shop") }}"><span class="btn btn-primary"><i class="fas fa-solid fa-arrow-left"></i>
-											Back
-											to shop</span></a>
+											Back to shop</span></a>
 								@endif
 							</div>
 						</div>
-						<div class="col-lg-4">
+						<div class="col-lg-3">
 							<div class="total-section">
 								<table class="total-table">
 									<thead class="total-table-head">
@@ -216,6 +215,10 @@
 					alert('quantity in [1-99999]')
 					window.location.reload();
 				}
+			});
+			$('.inputCartItemQuantity').on('input', function(e) {
+				$(this).val($(this).val().replace(/[^0-9]/g, ''));
+
 			});
 		});
 	</script>

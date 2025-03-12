@@ -107,7 +107,7 @@
 								<br>
 								Name: {{ $orderName }}
 								<br>
-								Phone: {{ $orderPhone }}
+								Phone: {{ number_format($orderPhone, 0, ".", " ") }}
 								<br>
 								Address: {{ $orderAddress }}
 							</address>
@@ -118,7 +118,7 @@
 								<br>
 								Name: {{ $shippingName }}
 								<br>
-								Phone: {{ $shippingPhone }}
+								Phone: {{ number_format($shippingPhone, 0, ".", " ") }}
 								<br>
 								Address: {{ $shippingAddress }}
 							</address>
@@ -148,9 +148,10 @@
 										@foreach ($cartItems as $item)
 											<tr>
 												<td>{{ $item->proName }}</td>
-												<td class="text-center">{{ ($item->proPrice * (100 - $item->proDiscount)) / 100 }}</td>
+												<td class="text-center">{{ number_format(($item->proPrice * (100 - $item->proDiscount)) / 100, 2) }}</td>
 												<td class="text-center"> {{ $cart[$item->id] }}</td>
-												<td class="text-right">{{ (($item->proPrice * (100 - $item->proDiscount)) / 100) * $cart[$item->id] }}</td>
+												<td class="text-right">
+													{{ number_format((($item->proPrice * (100 - $item->proDiscount)) / 100) * $cart[$item->id], 2) }}</td>
 											</tr>
 										@endforeach
 									</tbody>
@@ -160,25 +161,25 @@
 											<td class="thick-line"></td>
 											<td class="thick-line"></td>
 											<td class="thick-line text-center"><strong>Subtotal</strong></td>
-											<td class="thick-line text-right">${{ $subtotal }}</td>
+											<td class="thick-line text-right">${{ number_format($subtotal, 2) }}</td>
 										</tr>
 										<tr>
 											<td class="no-line"></td>
 											<td class="no-line"></td>
 											<td class="no-line text-center"><strong>Shipping</strong></td>
-											<td class="no-line text-right">${{ $shipping }}</td>
+											<td class="no-line text-right">${{ number_format($shipping, 2) }}</td>
 										</tr>
 										<tr>
 											<td class="no-line"></td>
 											<td class="no-line"></td>
 											<td class="no-line text-center"><strong>Discount</strong></td>
-											<td class="no-line text-right">${{ $discountAmount }}</td>
+											<td class="no-line text-right">${{ number_format($discountAmount, 2) }}</td>
 										</tr>
 										<tr>
 											<td class="no-line"></td>
 											<td class="no-line"></td>
 											<td class="no-line text-center"><strong>Total</strong></td>
-											<td class="no-line text-right">${{ $finalPrice }}</td>
+											<td class="no-line text-right">${{ number_format($finalPrice, 2) }}</td>
 										</tr>
 									</tbody>
 								</table>
@@ -280,84 +281,5 @@
 			</div>
 		</div>
 	</div>
-	<script>
-		// $(document).ready(function() {
-		// 	$("#buttonSubmit").click(function() {
-		// 		// alert("Submitting form");
-		// 		// trigger paypal button after alert is triggered
-		// 		$("#checkoutForm").submit();
-		// 	});
-
-		// 	$('#confirmInfo').on('change', function(e) {
-		// 		if ($('#confirmInfo').is(':checked')) {
-		// 			$('#buttonPaypal').removeClass('d-none');
-		// 		} else {
-		// 			$('#buttonPaypal').addClass('d-none');
-		// 		}
-		// 	});
-		// });
-		// paypal.Buttons({
-		// 	alert('are you sure you want to');
-		// 	createOrder: function() {
-		// 		return fetch("/create/" + document.getElementById("paypal-amount").value)
-		// 			.then((response) => response.text())
-		// 			.then((id) => {
-		// 				return id;
-		// 			});
-		// 	},
-
-		// 	onApprove: function() {
-		// 		//get order_id from session order_id
-		// 		let orderId = '{{ session("order_id") }}';
-		// 		$('#order_id').val(orderId);
-		// 		console.log(orderId);
-		// 		$("#checkoutForm").submit();
-		// 	},
-
-		// 	onCancel: function(data) {
-		// 		//todo
-		// 	},
-
-		// 	onError: function(err) {
-		// 		//todo
-		// 		console.log(err);
-		// 	}
-		// }).render('#payment_options');
-		paypal.Buttons({
-			createOrder: function() {
-				return fetch("/create/" + document.getElementById("paypal-amount").value)
-					.then((response) => response.text())
-					.then((id) => {
-						return id;
-					});
-			},
-
-			onApprove: function() {
-				return fetch("/complete", {
-						method: "post",
-						headers: {
-							"X-CSRF-Token": '{{ csrf_token() }}'
-						}
-					})
-					.then((response) => response.json())
-					.then((order_details) => {
-						console.log(order_details);
-						document.getElementById("paypal-success").style.display = 'block';
-						//paypal_buttons.close();
-					})
-					.catch((error) => {
-						console.log(error);
-					});
-			},
-
-			onCancel: function(data) {
-				//todo
-			},
-
-			onError: function(err) {
-				//todo
-				console.log(err);
-			}
-		}).render('#payment_options');
-	</script>
+	<script></script>
 @endsection

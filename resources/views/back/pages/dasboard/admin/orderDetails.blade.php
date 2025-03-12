@@ -117,7 +117,8 @@
 							<form action="{{ route("admin.order.updateStatus") }}" method="POST">
 								@csrf
 								<input type="hidden" name="orderId" value="{{ $order->id }}">
-								<button type="submit" id="btnFinish" disabled class="btn btn-success btn-pill">Finish order</button>
+								<button type="submit" id="btnFinish" onclick="return confirm('Confirm finish order !!!')" disabled
+									class="btn btn-success btn-pill">Finish order</button>
 							</form>
 						@else
 							<div class="alert alert-success">This order has been finished.</div>
@@ -130,7 +131,7 @@
 	</div>
 	<script>
 		$(document).ready(function() {
-			// btnFinish only show when both checkSender and checkProducts are checked
+			// btnFinish only available when both checkSender and checkProducts are checked
 			$("#checkSender").change(function() {
 				if ($("#checkSender").is(":checked") && $("#checkProducts").is(":checked")) {
 					$("#btnFinish").prop("disabled", false);
@@ -144,8 +145,7 @@
 				} else {
 					$("#btnFinish").prop("disabled", true);
 				}
-			})
-
+			});
 		});
 	</script>
 

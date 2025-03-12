@@ -10,7 +10,6 @@
 					<h1 class="page-title">
 						Reply contact
 					</h1>
-
 				</div>
 			</div>
 		</div>
