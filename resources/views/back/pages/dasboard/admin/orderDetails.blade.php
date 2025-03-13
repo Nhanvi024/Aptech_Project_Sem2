@@ -123,7 +123,7 @@
 						@else
 							<div class="alert alert-success">This order has been finished.</div>
 						@endif
-						<a href="{{ URL::previous() }}" class="btn btn-primary btn-pill mt-2">Go back</a>
+						<a href="{{ route('admin.order.manage') }}" class="btn btn-primary btn-pill mt-2">Go back</a>
 					</div>
 				</div>
 			</div>
