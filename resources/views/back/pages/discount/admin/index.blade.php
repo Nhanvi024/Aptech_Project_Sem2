@@ -83,7 +83,7 @@
 						<th>Value</th>
 						<th>Max Value</th>
 						<th>Quantity</th>
-						<th>Quantity</th>
+						<th>Condition</th>
 						<th>Uses/user</th>
 						<th>Start date</th>
 						<th>End date</th>
