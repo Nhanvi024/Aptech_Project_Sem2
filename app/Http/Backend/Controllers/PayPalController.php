@@ -173,6 +173,12 @@ class PayPalController extends Controller
             Session::forget('orderInfos');
             //// end clear orderInfos in session
 
+            //// clear paymentData in session
+            if (Session::has('paymentData')) {
+                Session::forget('paymentData');
+            }
+            //// end clear paymentData in session
+
             return redirect()->route('user.shop')->with('success', 'Thank you for your order !');
         } else {
             //// clear orderInfos in session
